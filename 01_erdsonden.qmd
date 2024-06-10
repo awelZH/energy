@@ -1,0 +1,190 @@
+---
+title: "Auswertung Wärmepumpen"
+subtitle: "(Erdsonden)"
+author: "Gian-Marco Alt"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Auswertung Wärmepumpen (Erdsonden)
+
+Für die Energiestatistik werden auch Angaben zu den Wärmepumpen ausgewertet<br> Die Daten für die Erdsonden liegen als Geodaten bzw. als WFS-Geodienst vor und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
+
+## Inputdaten
+
+*Input Gemeindengrenzen*<br> - ms:ogd-0405_arv_basis_avzh_gemeinden_f / MOpublic Klasse Municipal_boundary (Gemeindegrenze) (405.2)
+
+*Input Erdsonden*<br> - ms:ogd-0182_giszhpub_gs_mastersonden_p / Mastersonden (182.1)<br> - zusätzliche Sonden -\> "ms:ogd-0182_giszhpub_gs_sonden_p" (182.2)
+
+```{r}
+#| label: load-packages
+#| include: false
+
+library(sf) # simple features packages for handling vector GIS data
+library(httr) # generic webservice package
+library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
+library(ows4R) # interface for OGC webservices
+
+```
+
+```{r}
+#| label: load-input-data
+#| include: false
+
+# loads input *.csv if already existing
+# master_join <- read_delim("erdsonden_bfs.csv", delim = ",")
+
+```
+
+```{r}
+#| label: def-wfs
+#| echo: true
+
+## Some variables
+# URL of the WFS service
+wfs_all <- "https://maps.zh.ch/wfs/OGDZHWFS"
+# Projection: EPSG:2056 (CH1903+ / LV95)
+crs <- 2056
+# Parsing the URL
+url <- httr2::url_parse(wfs_all)
+
+# # Übersicht der vorhandenen Layers
+# wfs_cl_all <- WFSClient$new(wfs_all, serviceVersion = "2.0.0")
+# a <- wfs_cl_all$getFeatureTypes(pretty = TRUE)
+
+```
+
+# Einlesen der Point Feature Class "Mastersonden", Quelle: WFS-Geodienst
+
+```{r}
+#| label: get-wfs-sonde
+#| echo: false
+
+# Mastersonden
+url$query <- list(
+  service = "wfs",
+  version = "2.0.0",
+  request = "GetFeature",
+  typename = "ms:ogd-0182_giszhpub_gs_mastersonden_p",
+  srsName = paste0("EPSG:", crs)
+)
+request <- httr2::url_build(url)
+
+# Mastersonden werden eingelesen, type = 1: Create a POINT geometry column.
+master <- 
+  request %>% 
+  sf::read_sf(type = 1) %>% 
+  sf::st_transform(crs = sf::st_crs(crs))
+
+# Verfügungsdatum Erdsonde ist leider (noch) nicht mitenthalten
+# wird über separates csv eingelsen und an master gejoint
+f_verfueg <- read_delim("C:/Users/Public/gitrepos/gbs_dat_verfuegung.csv", delim = ",") %>%
+  mutate(datum_verfuegung = as.Date(datum_verfuegung, format = "%d.%m.%Y")) %>% 
+  group_by(gbs_id,datum_verfuegung) %>% 
+  summarise()
+
+master <- master %>% 
+  left_join(f_verfueg, by = "gbs_id")
+
+```
+
+# Einlesen der Polygon Feature Class "Gemeindegrenzen ZH", Quelle: WFS-Geodienst
+
+```{r}
+#| label: get-wfs-grenzen
+#| echo: false
+
+# Grenzen
+url$query <- list(service = "wfs",
+                  version = "2.0.0",
+                  request = "GetFeature",
+                  typename = "ms:ogd-0405_arv_basis_avzh_gemeinden_f",
+                  srsName = paste0("EPSG:", crs)
+)
+request <- httr2::url_build(url)
+
+# Gemeindegrenzen werden eingelesen, type = 6: Create a MULTIPOLYGON geometry column.
+grenzen <- 
+  request %>% 
+  sf::read_sf(type = 6) %>% 
+  sf::st_transform(crs = sf::st_crs(crs))
+
+```
+
+```{r}
+#| label: join-master-grenzen
+#| echo: false
+
+# Join attributes from Grenzen to Mastersonden
+master_join <- st_join(master, grenzen)
+
+# write_delim(master_join, "erdsonden_bfs.csv", delim = ",")
+```
+
+# some plots
+
+```{r}
+#| label: plots
+#| echo: false
+
+ggplot() +
+  geom_sf(data = master) +
+  geom_sf(data = grenzen, color = "blue", alpha = 0.2)
+
+# ggplot() + geom_sf(data = grenzen) + geom_sf(data = master_join, 
+#    aes(colour = name))
+
+```
+
+# Datenverarbeitung
+
+```{r}
+#| label: wrangle-data
+#| echo: true
+
+dat_tmp <- tibble(master_join) %>%
+  select(status) %>% 
+  group_by(status) %>% 
+  summarise(tot = n())
+
+# Define the time range
+start_year <- 1983
+current_year <- year(Sys.Date())
+
+# Create a sequence of years from 1983 to the current year
+years <- tibble(year_verfuegung = seq(start_year, current_year))
+
+# Extract unique combinations of bfsnr and name values
+bfsnr_name_values <- master_join %>% select(bfsnr, name) %>% distinct()
+
+# Create a complete time series for each combination of bfsnr and name
+complete_time_series <- bfsnr_name_values %>%
+  crossing(year_verfuegung = seq(start_year, current_year))
+
+erdsonden <- tibble(master_join) %>% 
+  mutate(year_verfuegung = year(datum_verfuegung)) %>%
+  group_by(bfsnr, name, year_verfuegung) %>% 
+  summarise(
+    total_waermeentnahme = sum(waermeentnahme, na.rm = TRUE),
+    total_waermeeintrag = sum(waermeeintrag, na.rm = TRUE),
+    anzahl = n(),
+    .groups = 'drop'
+  ) %>%
+  right_join(complete_time_series, by = c("bfsnr", "name", "year_verfuegung")) %>%
+  arrange(bfsnr, name, year_verfuegung) %>%
+  group_by(bfsnr, name) %>%
+  mutate(
+    total_waermeentnahme = coalesce(total_waermeentnahme, 0),
+    total_waermeeintrag = coalesce(total_waermeeintrag, 0),
+    anzahl = coalesce(anzahl, 0),
+    cum_waermeentnahme = cumsum(total_waermeentnahme),
+    cum_waermeeintrag = cumsum(total_waermeeintrag),
+    cum_anzahl = cumsum(anzahl)
+  ) %>%
+  ungroup()
+
+head(erdsonden,30)
+
+```
