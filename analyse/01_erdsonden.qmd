@@ -23,6 +23,7 @@ Für die Energiestatistik werden auch Angaben zu den Wärmepumpen ausgewertet<br
 #| include: false
 
 library(sf) # simple features packages for handling vector GIS data
+library(dplyr)
 library(httr) # generic webservice package
 library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
 library(ows4R) # interface for OGC webservices
