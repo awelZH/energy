@@ -5,24 +5,19 @@ format: html
 editor: visual
 ---
 
-## Automatisierung der Energiestatistik: Gesamtenergiestatistik & Verkehr
+## Automatisierung der Energiestatistik: Gesamt & Verkehr
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Inputdaten
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. The `echo: false` option disables the printing of code (only output is displayed).
+## 1. Inputdaten
 
 ```{r}
 #| echo: false
 
-# save code here: C:\Users\Public\Git Repos\energy\analyse
-# save code as 03_data_gest
+# save code as 03_data_gest here: C:\Users\Public\Git Repos\energy\analyse
 
 # clear workspace without unloading packages
 rm(list = ls())
 
-# install packages - we need dplyr and readr
+# install tidyverse - we need dplyr and readr
 # install.packages("tidyverse") 
 
 library(readr)
@@ -45,7 +40,7 @@ unique(data$Rubrik)
 unique(data$Energietraeger)
 ```
 
-## Datenverarbeitung
+## 2. Datenverarbeitung
 
 ```{r}
 # create subset for: 1990+, Erdölprodukte, Total
@@ -83,6 +78,7 @@ subset7 <- data %>%
 
 ```{r}
 # create Rubrik "Heizöl" = DIFFERENCE BETWEEN "Endverbrauch - Total" (Rubrik) // "Erdölprodukte" (Energieträger) AND "Endverbrauch - Verkehr" (Rubrik) // "Erdölprodukte" (Energieträger)
+
 # filter data for Rubrik = "Endverbrauch - Verkehr" and Energietraeger = "Erdölprodukte"
 data_x_y <- data %>%
   filter(Jahr >= 1990 & Rubrik == "Endverbrauch - Verkehr" & Energietraeger == "Erdölprodukte") %>%
