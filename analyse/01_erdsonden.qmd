@@ -8,7 +8,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Auswertung Wärmepumpen (Erdsonden)
+## Auswertung Wärmepumpen (Erdsonden
 
 Für die Energiestatistik werden auch Angaben zu den Wärmepumpen ausgewertet<br> Die Daten für die Erdsonden liegen als Geodaten bzw. als WFS-Geodienst vor und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
 
