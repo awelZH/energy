@@ -225,6 +225,8 @@ write.csv(solar_pv_final, file.path(file.path(dirname(dirname(rstudioapi::getAct
 
 Für die Energiestatistik werden auch Angaben zu thermischen Solaranlagen ausgewertet<br> Die Daten für die Anlagen sind in der Teilenergiestatistik erneuerbare Energien und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
 
+
+
 ## Inputdaten
 
 ```{r}
