@@ -1,0 +1,218 @@
+---
+title: "Auswertung KVA"
+author: "Levi Fuchs"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Auswertung KVA
+
+Für die Energiestatistik werden auch Angaben zu den KVA ausgewertet<br> Die Daten für KVA-Abwärme können als Excel-Daten vom Bund online bezogen werden und können mit R eingelesen, umgeformt und ausgewertet werden. Leo Morf?
+
+# Inputdaten
+
+```{r}
+#| label: load-packages
+#| include: false
+
+rm(list = ls())
+
+# Benötigte Pakete
+library(readxl)
+library(dplyr)
+library(stringr)
+library(tidyverse)
+library(sf)
+
+current_year <- as.integer(format(Sys.Date(), "%Y"))
+```
+
+```{r}
+#| label: load-input-data
+#| include: false
+
+#alte daten einfügen
+kva_olddata_input <- read.csv("K:/BD-AWEL-Ef/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/KVA/KVA_Anlagen.csv", sep=";") 
+
+# Ordnerpfad anpassen
+pfad_kva <- "K:/BD-AWEL-Ef/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/KVA/daten_leomorf"
+
+# Alle Excel-Dateien im Ordner auflisten
+excel_dateien <- list.files(path = pfad_kva, pattern = "\\.xlsm$", full.names = TRUE)
+
+# Gemeindedaten abrufen
+gemeinden_input <- st_read("https://maps.zh.ch/wfs/OGDZHWFS?Service=WFS&Request=GetCapabilities", layer = "ms:ogd-0405_arv_basis_avzh_gemeinden_f")
+gemeinden_input$name_clean <- sub(" \\(ZH\\)", "", gemeinden_input$name)
+gemeinden <- gemeinden_input %>%
+  group_by(name_clean) %>%
+  slice(1) %>%
+  ungroup()
+```
+
+# Datenverarbeitung
+
+```{r}
+#| label: wrangle-data
+#| echo: true
+
+allowed_values <- c("Fverk", "Dverk", "Sprod", "Sverk", "Den", "DenL1", "DenL2", "DenL3", "DenL4", "Amenge", "Aheizw")
+
+# Initialisiere eine leere Liste, um DataFrames mit Namen zu speichern
+kva_dataframes <- list()
+
+# Schleife durch alle Excel-Dateien
+for (datei in excel_dateien) {
+  # Sheet "Eingabemaske1_Energie" einlesen
+  if ("Eingabemaske1_Energie" %in% excel_sheets(datei)) {
+    daten <- read_excel(datei, sheet = "Eingabemaske1_Energie")
+    
+    # Inhalte durchsuchen
+    text_inhalt <- tolower(as.character(unlist(daten)))
+    text_inhalt <- text_inhalt[!is.na(text_inhalt)]
+    
+    # Namen der KVA bestimmen
+    if (any(str_detect(text_inhalt, "winterthur"))) {
+      name <- "KVA Winterthur"
+    } else if (any(str_detect(text_inhalt, "hinwil"))) {
+      name <- "KEZO Hinwil"
+    } else if (any(str_detect(text_inhalt, "limeco"))) {
+      name <- "KV Limeco"
+    } else if (any(str_detect(text_inhalt, "hagenholz"))) {
+      name <- "ERZ Hagenholz"
+    } else if (any(str_detect(text_inhalt, "horgen"))) {
+      name <- "KVA Horgen"
+    } else {
+      name <- "Unbekannt"
+    }
+    
+    # "Bilanzzeitraum"-Zeile finden
+    bezeichnung_zeile <- which(str_detect(tolower(daten[[2]]), "bilanzzeitraum"))
+    if (length(bezeichnung_zeile) == 0) next  # Wenn nicht gefunden, nächste Datei
+    
+    # Ab "Bilanzzeitraum"-Zeile beschneiden
+    daten_beschnitten <- daten[bezeichnung_zeile[1]:nrow(daten), ]
+    
+    # Spalten bis "2023" (aktuelles Jahr - 1) behalten
+    spalten_2023 <- which(str_detect(tolower(daten_beschnitten[1, ]), as.character(current_year - 1)))
+    if (length(spalten_2023) > 0) {
+      daten_beschnitten <- daten_beschnitten[, 1:spalten_2023[1]]
+    }
+    
+    # Spaltennamen setzen (1. Zeile)
+    if (nrow(daten_beschnitten) > 1) {
+      colnames(daten_beschnitten) <- as.character(unlist(daten_beschnitten[1, ]))
+      daten_beschnitten <- daten_beschnitten[-1, ]
+    }
+
+    # ---------------------- Weiterverarbeitung ----------------------
+
+    # Die erste Spalte in "Kuerzel" umbenennen
+    if (ncol(daten_beschnitten) > 0) {
+      colnames(daten_beschnitten)[1] <- "Kuerzel"
+      
+      # Überprüfen, ob die Spalte "Einheit" existiert, sonst suchen und umbenennen
+      if (!"Einheit" %in% colnames(daten_beschnitten)) {
+        # Schleife durch alle Spalten (einschließlich leerer Spaltennamen)
+        for (i in seq_along(daten_beschnitten)) {
+          col <- daten_beschnitten[[i]]  # Spalteninhalte
+          
+          # Suche nach "[MWh]" in der Spalte
+          if (any(str_detect(as.character(col), "\\[MWh\\]"), na.rm = TRUE)) {
+            colnames(daten_beschnitten)[i] <- "Einheit"  # Spalte umbenennen
+            break  # Sobald die Spalte gefunden wurde, Schleife abbrechen
+          }
+        }
+      }
+      
+      # Spaltennamen überprüfen und ungültige Spalten (z.B. leere oder NA) entfernen
+      daten_beschnitten <- daten_beschnitten[, !is.na(colnames(daten_beschnitten))]
+      
+      # Filtere nur die Zeilen, bei denen "Kuerzel" einen der gewünschten Werte enthält
+      daten_beschnitten <- daten_beschnitten %>% filter(Kuerzel %in% allowed_values)
+      
+      # Überprüfen, ob die benötigten Spalten vorhanden sind
+      required_columns <- c("Kuerzel", "Bilanzzeitraum", "Einheit", as.character(current_year - 2), as.character(current_year - 1))
+      existing_columns <- required_columns[required_columns %in% colnames(daten_beschnitten)]
+      
+      # Nur die vorhandenen Spalten behalten
+      daten_beschnitten <- daten_beschnitten[, existing_columns, drop = FALSE]
+      
+      # Den bearbeiteten DataFrame in die Liste speichern
+      kva_dataframes[[name]] <- daten_beschnitten
+    }
+  } else {
+    message(paste("Sheet 'Eingabemaske1_Energie' nicht gefunden in Datei:", basename(datei)))
+  }
+}
+
+kva_list_pivot <- lapply(kva_dataframes, function(df) {
+  df %>%
+    select(-Bilanzzeitraum, -Einheit) %>%  # Entfernt unerwünschte Spalten
+    pivot_longer(cols = c(`2023`, `2024`), names_to = "Jahr", values_to = "Wert") %>%
+    pivot_wider(names_from = Kuerzel, values_from = Wert)
+})
+
+
+# Ergebnis anzeigen
+# print(df_pivot)
+# print(df_list_pivot[["KVA Winterthur"]], n = 100)
+# print(dataframes_liste_orig[["KEZO Hinwil"]], n = 100)
+# print(dataframes_liste_orig[["KVA Horgen"]], n = 100)
+
+
+kva_jaresstand <- map_df(names(kva_list_pivot), function(name) {
+  df <- kva_list_pivot[[name]]  # Zugriff auf den jeweiligen DataFrame
+  
+  df %>%
+    mutate(
+      anlage = name,  # Name des DataFrames als neue Spalte
+      jahr = Jahr,
+      kva_waerme_mwh_anlage = as.numeric(Fverk),
+      kva_stromprod_mwh_anlage = as.numeric(Sprod),
+      kva_stromabsatz_mwh_anlage = as.numeric(Sverk),
+      kva_dampf_mwh_anlage = rowSums(select(df, matches("^Den(L[0-9]*)?$")) %>% mutate_all(as.numeric), na.rm = TRUE),
+      kva_abfall_t_anlage = as.numeric(Amenge),
+      kva_hu_wert_anlage = as.numeric(Aheizw),
+      jahr = as.integer(jahr)
+    ) %>%
+    select(anlage, jahr, kva_waerme_mwh_anlage, kva_stromprod_mwh_anlage, kva_stromabsatz_mwh_anlage, 
+           kva_dampf_mwh_anlage, kva_abfall_t_anlage, kva_hu_wert_anlage)
+})
+
+# Ergebnis anzeigen
+print(kva_jaresstand)
+
+kva_olddata <- kva_olddata_input %>% 
+  mutate(across(-c(jahr, anlage, gemeinde), as.numeric),
+         jahr = as.integer(jahr))
+
+kva_merged <- bind_rows(kva_olddata, kva_jaresstand) %>%
+  arrange(jahr) %>%  # Sicherstellen, dass ältere Werte zuerst kommen
+  distinct(anlage, jahr, .keep_all = TRUE)  # Behalte nur die neuesten Werte
+
+# Ergebnis anzeigen
+print(kva_merged)
+
+kva_final <- kva_merged %>%
+  mutate(
+    gemeinde = case_when(
+      is.na(gemeinde) & anlage == "KVA Winterthur" ~ "Winterthur",
+      is.na(gemeinde) & anlage == "KVA Horgen" ~ "Horgen",
+      is.na(gemeinde) & anlage == "KV Limeco" ~ "Dietikon",
+      is.na(gemeinde) & anlage == "ERZ Hagenholz" ~ "Zürich",
+      is.na(gemeinde) & anlage == "KEZO Hinwil" ~ "Hinwil",
+      TRUE ~ gemeinde  # Alle anderen Werte bleiben unverändert
+    )
+  ) %>%
+  left_join(gemeinden, by = c("gemeinde" = "name_clean")) %>%
+  select(bfsnr, gemeinde, anlage, jahr, kva_waerme_mwh_anlage, kva_stromprod_mwh_anlage, kva_stromabsatz_mwh_anlage, kva_dampf_mwh_anlage, kva_abfall_t_anlage, kva_hu_wert_anlage)
+```
+
+# Export
+
+```{r}
+
+write.csv(kva_final, file.path(file.path(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "data", "output"), "kva.csv"), row.names = FALSE)
+```

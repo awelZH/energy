@@ -1,0 +1,103 @@
+---
+title: "Auswertung Holz"
+author: "Levi Fuchs"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Auswertung Holz
+
+Für die Energiestatistik werden auch Angaben zu den Holz ausgewertet<br> Die Daten werden aus der [Holzenergiestatistik des Bundes](https://pubdb.bfe.admin.ch/de/suche?keywords=403) bezogen und können mit R eingelesen, umgeformt und ausgewertet werden. Die Unübersichtlichkeit des Excels und die vielen Sheets erschweren eine automatisierte Verarbeitung. **Im Jahr 2024 wurde die Statistik als xlsm herausgegeben. Code müsste angepast werden, wenn wieder xlsx.**
+
+## Inputdaten
+
+```{r}
+#| label: load-packages
+#| include: false
+
+rm(list = ls())
+
+library(openxlsx)
+library(httr) # generic webservice package
+library(tidyverse)
+
+holz_olddata <- read.csv("K:/BD-AWEL-Ef/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Holz/holz.csv", sep=";") # ANPASSEN!
+
+kennwerte <- read.csv("https://raw.githubusercontent.com/awelZH/energy/refs/heads/main/data/input/kennwerte.csv", encoding="UTF-8", sep=";", header = T)
+
+temp_file <- tempfile(fileext = ".xlsm")
+GET("https://pubdb.bfe.admin.ch/de/publication/download/11789", write_disk(temp_file, overwrite = TRUE)) #s. https://pubdb.bfe.admin.ch/de/suche?keywords=404
+
+sheets <- getSheetNames(temp_file)
+
+# Prüfen, welches Sheet existiert und dann einlesen
+if ("7.1" %in% sheets) {
+  holz_input <- read.xlsx(temp_file, sheet = "7.1", colNames=FALSE)
+} else if ("P" %in% sheets) {
+  holz_input <- read.xlsx(temp_file, sheet = "P")
+} else {
+  stop("Keines der gewünschten Sheets ('7.1' oder 'P') gefunden!")
+}
+```
+
+## Datenverarbeitung
+
+```{r}
+#| label: load-input-data
+#| include: false
+
+#Jahreszahl des Datensatzes finden
+jahr_datensatz <- holz_input %>% 
+  mutate_all(as.character) %>%  
+  pivot_longer(everything(), values_to = "text") %>%  
+  mutate(jahr = str_extract(text, "\\b(20\\d{2}|19\\d{2})\\b")) %>%  # Findet Jahreszahlen ab 1900
+  filter(!is.na(jahr)) %>%  # Nur Zeilen mit einer gefundenen Jahreszahl behalten
+  slice(1) %>%  # Nimmt die erste gefundene Jahreszahl
+  select(jahr) %>%
+  mutate(jahr = as.integer(jahr)) %>%
+  pull(jahr)
+
+
+# 1. Zeile finden, in der "Summe" steht
+summe_row <- which(apply(holz_input, 1, function(row) any(row == "Summe")))[1]  # Erste Zeile mit "Summe"
+
+# 2. Falls gefunden, alle Zeilen darüber entfernen
+if (!is.na(summe_row)) {
+  holz_prov1 <- holz_input[summe_row:nrow(holz_input), ]  # Alles oberhalb der Zeile mit "Summe" abschneiden
+  colnames(holz_prov1) <- holz_prov1[1, ]  # Erste Zeile als Spaltennamen setzen
+  holz_prov1 <- holz_prov1[-1, ]  # Die Spaltennamen-Zeile selbst entfernen
+} else {
+  stop("'Summe' wurde nicht gefunden!")
+}
+
+# 3. Spaltenindex von "Summe" finden
+summe_index <- which(names(holz_prov1) == "Summe")
+
+# 4. Falls "Summe" existiert, die nächsten zwei Spalten auswählen
+if (length(summe_index) > 0 && summe_index < ncol(holz_prov1)) {
+  selected_cols <- c(1, summe_index, summe_index + 1)  # Erste Spalte + "Summe" + rechts davon
+  
+  # 4. Relevante Spalten auswählen
+  holz_prov2 <- holz_prov1[, selected_cols]
+  
+  # 5. Spalte rechts neben "Summe" in "Leistung" umbenennen
+  colnames(holz_prov2)[3] <- "holz_kw_zh"
+} else {
+  stop("Spalte 'Summe' wurde nicht gefunden oder es gibt keine Spalte daneben!")
+}
+
+holz_jahresstand <- holz_prov2 %>%
+    filter(.[[1]] == "Zürich") %>%
+  select(-c(Summe, Kantone)) %>%
+  mutate(jahr = jahr_datensatz, holz_kw_zh = as.numeric(holz_kw_zh)) %>%
+  relocate(jahr, .before = holz_kw_zh)
+
+holz_final <- holz_olddata %>%
+  rows_update(holz_jahresstand, by = "jahr", unmatched = "ignore") %>%  # Erst vorhandene Werte aktualisieren
+  bind_rows(anti_join(holz_jahresstand, holz_olddata, by = "jahr")) %>%  # Dann fehlende Jahre hinzufügen 
+  mutate(holz_mwh_zh = holz_kw_zh*kennwerte$betriebszeit_holz/1000)
+
+write.csv(holz_final, file.path(file.path(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "data", "output"), "holz.csv"), row.names = FALSE)
+```

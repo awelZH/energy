@@ -1,0 +1,273 @@
+---
+title: "Auswertung Sonne (thermiisch und PV"
+author: "Levi Fuchs"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Auswertung Sonne (PV)
+
+Für die Energiestatistik werden auch Angaben zu PV-Anlagen ausgewertet<br> Die Daten für die PV-Anlagen liegen OGD als csv vor und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
+
+## Inputdaten
+
+```{r}
+#| label: load-packages
+#| include: false
+
+rm(list = ls())
+
+library(sf) # simple features packages for handling vector GIS data
+library(httr) # generic webservice package
+library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
+library(ows4R) # interface for OGC webservices
+library(fuzzyjoin)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(readxl)
+
+
+
+## Some variables
+# URL of the WFS service
+wfs_all <- "https://maps.zh.ch/wfs/OGDZHWFS"
+# Projection: EPSG:2056 (CH1903+ / LV95)
+crs <- 2056
+# Parsing the URL
+url <- httr2::url_parse(wfs_all)
+
+```
+
+```{r}
+#| label: load-input-data
+#| include: false
+
+# Der Download-Link für die ZIP-Datei
+url <- "https://data.geo.admin.ch/ch.bfe.elektrizitaetsproduktionsanlagen/csv/2056/ch.bfe.elektrizitaetsproduktionsanlagen.zip"
+
+# Den ZIP-Download speichern
+download.file(url, destfile = "ch.bfe.elektrizitaetsproduktionsanlagen.zip", mode = "wb")
+
+# Entpacken des ZIP-Archivs
+unzip("ch.bfe.elektrizitaetsproduktionsanlagen.zip", exdir = "data")
+
+# Liste der entpackten Dateien anzeigen
+list.files("data")
+
+# Einlesen der CSV-Dateien
+electricity_plant_orig <- read.csv("data/ElectricityProductionPlant.csv", stringsAsFactors = FALSE)
+plant_detail <- read.csv("data/PlantDetail.csv", stringsAsFactors = FALSE)
+
+electricity_plant <- electricity_plant_orig %>%
+  filter(Canton == "ZH", SubCategory == "subcat_2")
+
+#räumliche Daten aus X/Y-Koordinaten machen. Einige Koordinaten fehlen. Deshalb nur mit den Daten, bei denen Koordinaten vorhanden sind. Andere werden später hinzugefügt
+electricity_plant_gis <- st_as_sf(electricity_plant %>% filter(!is.na(X_x) & !is.na(X_y)), coords = c("X_x", "X_y"), crs = crs)  # LV95 (CH1903+)
+
+electricity_plant_nocoord <- electricity_plant %>% filter(is.na(X_x) & is.na(X_y))
+```
+
+# Einlesen der Polygon Feature Class "Gemeindegrenzen ZH", Quelle: WFS-Geodienst
+
+```{r}
+#| label: get-wfs-grenzen
+#| echo: false
+## Some variables
+# URL of the WFS service
+wfs_all <- "https://maps.zh.ch/wfs/OGDZHWFS"
+# Projection: EPSG:2056 (CH1903+ / LV95)
+crs <- 2056
+# Parsing the URL
+url <- httr2::url_parse(wfs_all)
+
+# Grenzen
+url$query <- list(service = "wfs",
+                  version = "2.0.0",
+                  request = "GetFeature",
+                  typename = "ms:ogd-0405_arv_basis_avzh_gemeinden_f",
+                  srsName = paste0("EPSG:", crs)
+)
+request <- httr2::url_build(url)
+
+# Gemeindegrenzen werden eingelesen, type = 6: Create a MULTIPOLYGON geometry column.
+grenzen <- 
+  request %>% 
+  sf::read_sf(type = 6) %>% 
+  sf::st_transform(crs = sf::st_crs(crs))
+
+gemeinden_ch <- grenzen[c("name", "bfsnr")] %>% distinct(name, bfsnr, .keep_all = TRUE)
+
+
+# Der Download-Link für die ZIP-Datei
+url2 <- "https://data.geo.admin.ch/ch.swisstopo-vd.ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz/ortschaftenverzeichnis_plz_2056.csv.zip"
+
+# Den ZIP-Download speichern
+download.file(url2, destfile = "ortschaftenverzeichnis_plz_2056.csv.zip", mode = "wb")
+
+# Entpacken des ZIP-Archivs
+unzip("ortschaftenverzeichnis_plz_2056.csv.zip", exdir = "data")
+
+# Liste der entpackten Dateien anzeigen
+list.files("data")
+
+# Einlesen der CSV-Dateien
+plz <- read.csv("data/AMTOVZ_CSV_LV95/AMTOVZ_CSV_LV95.csv", stringsAsFactors = FALSE, sep = ";")
+
+plz_unique <- plz %>% distinct(PLZ, .keep_all = TRUE)
+plz_unique2 <- plz_unique %>% distinct(Ortschaftsname, .keep_all = TRUE)
+
+
+# Führe einen left join durch
+df_merged <- electricity_plant %>%
+  mutate(Municipality = ifelse(Municipality == "Zürich-Flughafen", "Kloten", Municipality)) %>%
+  left_join(plz_unique[c("PLZ", "E", "N")], by = c("PostCode" = "PLZ")) %>%  # Verbinde die beiden Dataframes
+  mutate(X_x = ifelse(is.na(X_x), E, X_x)) %>%  # Ersetze NA-Werte
+  mutate(X_y = ifelse(is.na(X_y), N, X_y)) %>%
+  select(-c("E", "N")) %>%
+  left_join(plz_unique2[c("Ortschaftsname", "E", "N")], by = c("Municipality" = "Ortschaftsname")) %>%  # Verbinde die beiden Dataframes
+  mutate(X_x = ifelse(is.na(X_x), E, X_x)) %>%  # Ersetze NA-Werte
+  mutate(X_y = ifelse(is.na(X_y), N, X_y)) %>%
+  select(-c("E", "N")) %>%
+  left_join(plant_detail[c("Date", "Power", "ElectricityProductionPlantR")], by = c("xtf_id" = "ElectricityProductionPlantR"))
+
+electricity_plant_gis <- st_as_sf(df_merged, coords = c("X_x", "X_y"), crs = crs)  # LV95 (CH1903+)
+
+```
+
+```{r}
+#| label: join-master-grenzen
+#| echo: false
+
+# Join attributes from Grenzen to Mastersonden
+master_join <- st_join(electricity_plant_gis, grenzen)
+
+master_join
+
+pv <- st_set_geometry(master_join, NULL) %>%
+  select(c("xtf_id","bfsnr", "name", "InitialPower", "TotalPower", "Power", "BeginningOfOperation", "Date"))
+
+pv$Date <- as.Date(pv$Date, format = "%Y-%m-%d")
+pv$BeginningOfOperation <- as.Date(pv$BeginningOfOperation, format = "%Y-%m-%d")
+
+#pv$pv_strom_mwh_anlage <- pv$
+```
+
+# Datenverarbeitung
+
+```{r}
+#| label: wrangle-data
+#| echo: true
+
+# Define the time range
+start_year <- min(as.integer(format(pv$BeginningOfOperation, "%Y")), na.rm = T)
+current_year <- max(as.integer(format(pv$BeginningOfOperation, "%Y")), na.rm = T)
+
+
+# Create a sequence of years from 1983 to the current year
+years <- tibble(year_verfuegung = seq(start_year, current_year))
+
+# Extract unique combinations of bfsnr and name values
+bfsnr_name_values <- pv %>% select(bfsnr, name) %>% distinct()
+
+# Create a complete time series for each combination of bfsnr and name
+complete_time_series <- bfsnr_name_values %>%
+  crossing(year_verfuegung = seq(start_year, current_year))
+
+pv <- pv %>%
+  mutate(Date = coalesce(Date, BeginningOfOperation))
+
+solar_pv_final <- tibble(pv) %>% 
+  mutate(year_verfuegung = year(BeginningOfOperation)) %>%
+  group_by(bfsnr, name, year_verfuegung) %>% 
+  summarise(
+    # Wähle die richtige Power (InitialPower oder TotalPower) basierend auf dem Erweiterungsdatum
+    pv_strom_kw = sum(
+      if_else(year_verfuegung > year(Date), TotalPower, InitialPower), 
+      na.rm = TRUE
+    ),
+    pv_strom_mwh = sum(
+      if_else(year_verfuegung > year(Date), TotalPower, InitialPower), 
+      na.rm = TRUE
+    ),
+    anzahl = n(),
+    .groups = 'drop'
+  ) %>%
+  right_join(complete_time_series, by = c("bfsnr", "name", "year_verfuegung")) %>%
+  arrange(bfsnr, name, year_verfuegung) %>%
+  group_by(bfsnr, name) %>%
+  mutate(
+    pv_strom_kw = coalesce(pv_strom_kw, 0),
+    pv_strom_mwh = coalesce(pv_strom_mwh, 0),
+    anzahl = coalesce(anzahl, 0),
+    cum_pv_strom_kw = cumsum(pv_strom_kw),
+    cum_pv_strom_mwh = cumsum(pv_strom_mwh),
+    cum_anzahl = cumsum(anzahl)
+  ) %>%
+  ungroup()
+
+
+#Kantonsdaten 
+#pv_final_zh <- pv_final_gem %>%
+#  group_by(year_verfuegung) %>%  # Gruppiere nach Jahr
+#  summarise(
+#    total_pv_strom_mwh = sum(cum_pv_strom_mwh, na.rm = TRUE)  # Summiere die Werte #pro Jahr
+#  ) %>%
+#  arrange(year_verfuegung)  # Sortiere die Jahre aufsteigend
+
+
+write.csv(solar_pv_final, file.path(file.path(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "data", "output"), "sonne_pv.csv"), row.names = FALSE)
+```
+
+## Auswertung Sonne (thermisch)
+
+Für die Energiestatistik werden auch Angaben zu thermischen Solaranlagen ausgewertet<br> Die Daten für die Anlagen sind in der Teilenergiestatistik erneuerbare Energien und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
+
+## Inputdaten
+
+```{r}
+#| label: load-packages 
+#| #| include: false  
+
+temp_file <- tempfile(fileext = ".xlsx")
+GET("https://pubdb.bfe.admin.ch/de/publication/download/8787", write_disk(temp_file, overwrite = TRUE)) #s. https://pubdb.bfe.admin.ch/de/suche?keywords=404
+
+input_bfe_solar_th <- read_excel(temp_file, sheet = "Anhang B", skip = 2)
+
+bevoelkerung <- read.csv(file.path(file.path(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "data", "output"), "bevoelkerung.csv"))
+```
+
+# Datenverarbeitung
+
+```{r}
+
+bfe_solar_th <- input_bfe_solar_th %>%
+  pivot_longer(cols = names(input_bfe_solar_th[(which(names(input_bfe_solar_th) == "Einheit")+1):(which(names(input_bfe_solar_th) == "Herkunft")-1)]), #Jahreszahlen befinden sich zw. den Spalten "Einheit" und "Herkunft"
+               names_to = "jahr",       # Die neuen Spaltennamen (Jahreszahlen) werden hier gespeichert
+               values_to = "wert") %>%  # Die Werte werden in die neue Spalte "Wert" verschoben
+  mutate(jahr = as.numeric(sub("X", "", jahr))) %>%  # Entferne das 'X' und konvertiere in numerische Werte
+  select(Technologie, Zeileninhalt, Einheit, jahr, wert) %>%
+  filter(str_starts(Technologie, "Unverglaste") | str_starts(Technologie, "Röhren")) %>%
+  filter(Zeileninhalt == "Wärmeertrag") %>%
+  mutate(
+    Technologie = case_when(
+      str_starts(Technologie, "Röhren") ~ "solar_th_verglast_gwh_ch",
+      str_starts(Technologie, "Unverglaste") ~ "solar_th_unverglast_gwh_ch",
+      TRUE ~ Technologie)) %>%
+  pivot_wider(names_from = Technologie, values_from = wert) %>%
+  select(jahr, solar_th_verglast_gwh_ch, solar_th_unverglast_gwh_ch)
+
+
+solar_th_final <- bfe_solar_th %>%
+  left_join(bevoelkerung %>% select(jahr, verhaeltnis_ch_zh), by = "jahr") %>%
+  mutate(
+    solar_th_verglast_gwh_zh = as.numeric(solar_th_verglast_gwh_ch) / verhaeltnis_ch_zh,
+    solar_th_unverglast_gwh_zh = as.numeric(solar_th_unverglast_gwh_ch) / verhaeltnis_ch_zh
+  ) %>%
+  select(jahr, solar_th_verglast_gwh_ch, solar_th_unverglast_gwh_ch, 
+         solar_th_verglast_gwh_zh, solar_th_unverglast_gwh_zh)
+
+write.csv(solar_th_final, file.path(file.path(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "data", "output"), "sonne_th.csv"), row.names = FALSE)
+```
