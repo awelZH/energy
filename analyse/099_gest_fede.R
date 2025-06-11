@@ -33,11 +33,7 @@ zh_bev <- zh_bev %>%
 data <- read_csv('https://www.uvek-gis.admin.ch/BFE/ogd/115/ogd115_gest_bilanz.csv')
 
 ## Gasdaten (separat)
-gasdaten <- read_excel(
-  path = "C:/Users/Public/gitrepos/energy/data/input/Kantonale Energiestatistik Beispiel.xlsx",
-  sheet = "Gas",       # Name oder Nummer des Sheets
-  range = "I175:AC186"             # Zellbereich, den du brauchst
-)
+
 
 
 
