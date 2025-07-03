@@ -34,7 +34,7 @@ data <- read_csv('https://www.uvek-gis.admin.ch/BFE/ogd/115/ogd115_gest_bilanz.c
 
 ## Gasdaten (separat)
 
-
+gasdaten <- read_csv("data/input/gas_inp_gem.csv")
 
 
 
