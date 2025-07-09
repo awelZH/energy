@@ -5,62 +5,36 @@ library(readr)
 
 ## Daten einlesen
 
-##Schweizer Bevölkerung
-##XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX wie kann man das automatisiert herunterladen?
-ch_bev <- read_excel("C:/Users/BAA2757/Downloads/px-x-0102020000_104_20250606-114145.xlsx")
-
-
-# Bevölkerungsdaten Zürich
-url <- "https://www.web.statistik.zh.ch/ogd/daten/ressourcen/KTZH_00001141_00002139.xlsx"
-destfile <- "bevoelkerung.xlsx"
-
-
-if (!file.exists(destfile)) {
-  download.file(url, destfile, mode = "wb") # Nur herunterladen, wenn Datei lokal noch nicht vorhanden
-  message("Datei heruntergeladen.")
-} else {
-  message("Datei existiert bereits lokal.")
-}
-
-# Nur das Tabellenblatt "Gemeinden" einlesen
-zh_bev<- read_excel(destfile, sheet = "Gemeinden", skip = 6)
-
-zh_bev <- zh_bev %>%
-  select(-ends_with("_REL"), -ends_with("_ABS"))
+## Bevölkerungsdaten
+ch_bev <- read_csv("data/input/bev_gem.csv")
 
 
 ## Energiedaten
 data <- read_csv('https://www.uvek-gis.admin.ch/BFE/ogd/115/ogd115_gest_bilanz.csv')
 
 ## Gasdaten (separat)
-
 gasdaten <- read_csv("data/input/gas_inp_gem.csv")
-
 
 
 #### Datenaufbereitung ZH Bevölkerung####
 
-## zh_bevölkerung in longformat bringen
+## ch_bev auf kanton kürzen
 
-zh_bev_long <- zh_bev %>%
-  filter(GEMEINDE == "*KANTON ZÜRICH*") %>%           # nur kantonale Daten
-  pivot_longer(
-    cols = starts_with("TOTAL_"),
-    names_to = "Jahr",
-    names_prefix = "TOTAL_",
-    values_to = "TOTAL"
-  ) %>%
-  mutate(Jahr = as.integer(Jahr))
-
-
+zh_bev <- ch_bev %>%
+  filter(kt == "Zürich") %>%  # nur kantonale Daten
+  group_by(jahr) %>% 
+  summarize(bevölkerung = sum(value, na.rm =TRUE)) %>% 
+  ungroup
+ 
 
 #### Datenaufbereitung Gasdaten####
 
 ## gasdaten in longformat bringen und nur Total behalten (den Rest brauchen wir nicht)
 
-
-
-
+kantonale_gasdaten <- gasdaten %>%
+  group_by(jahr) %>%
+  summarise(kantonswert_MWh = sum(wert, na.rm = TRUE)) %>%
+  ungroup()
 
 
 #### Datenaufbereitung Energiestatistik####
