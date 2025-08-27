@@ -7,7 +7,8 @@ library(zoo)
 library(openxlsx)
 
 
-## Daten einlesen
+## Daten einlesen aus gitrepos > energy > data > input
+## ACHTUNG -- Hier immer neue/aktualisierte Datensätze ablgegen
 
 ## Bevölkerungsdaten
 ch_bev <- read_csv("data/input/bev_gem.csv")
@@ -215,9 +216,9 @@ print(emissions_tabelle)
 
 
 
-#### Emissionstabelle als Excel - Tabelle
+#### Emissionstabelle als Excel - Tabelle in energy > data > output
 
-write.xlsx(emissions_tabelle, file="Tabelle_Energiestatistik.xlsx")
+write.xlsx(emissions_tabelle, file="data/output/099_gest_tabelle_energiestatistik.xlsx")
 
 
 
