@@ -4,6 +4,7 @@ library(readxl)
 library(readr)
 library(purrr)
 library(zoo)
+library(openxlsx)
 
 
 ## Daten einlesen
@@ -204,11 +205,28 @@ print(emissions_tabelle)
 # KEF: rollender Mittelwert über 4 Jahre (aktuell + 3 davor), align = "right"
 emissions_tabelle <- emissions_tabelle %>%
   arrange(Jahr) %>%
+  rename(CO2_Emissionen_pro_Kopf = total_CO2_pKopf_t,
+         CO2_Emissionen_total = total_CO2_t) %>% 
   mutate(
-    KEF = rollmean(total_CO2_pKopf_t, k = 4, fill = NA, align = "right")
+    `KEF Indikator W11` = rollmean(CO2_Emissionen_pro_Kopf, k = 4, fill = NA, align = "right")
   )
 
 print(emissions_tabelle)
+
+
+
+#### Emissionstabelle als Excel - Tabelle
+
+write.xlsx(emissions_tabelle, file="Tabelle_Energiestatistik.xlsx")
+
+
+
+
+
+
+
+
+
 
 
 #### Berechnungen manuell ####
