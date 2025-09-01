@@ -11,7 +11,7 @@ library(openxlsx)
 ## ACHTUNG -- Hier immer neue/aktualisierte Datensätze ablgegen
 
 ## Bevölkerungsdaten
-ch_bev <- read_csv("data/input/bev_gem.csv")
+ch_bev_og <- read_csv("data/input/bev_gem.csv")
 
 
 ## Energiedaten
@@ -25,16 +25,16 @@ gasdaten <- read_csv("data/input/gas_inp_gem.csv")
 
 ## ch_bev auf kanton kürzen
 
-zh_bev <- ch_bev %>%
+zh_bev <- ch_bev_og %>%
   filter(kt == "Zürich") %>%  # nur kantonale Daten
   group_by(jahr) %>% 
   summarize(bevölkerung = sum(value, na.rm =TRUE)) %>% 
   ungroup
 
  
-## ch_bev nach jahr gruppieren für total
+## ch_bev nach jahr gruppieren für total (nicht auf Gemeindeniveau getrennt)
 
-ch_bev <- ch_bev %>%
+ch_bev <- ch_bev_og %>%
   group_by(jahr) %>% 
   summarize(bevölkerung = sum(value, na.rm =TRUE)) %>% 
   ungroup
@@ -230,7 +230,7 @@ write.xlsx(emissions_tabelle, file="data/output/099_gest_tabelle_energiestatisti
 
 
 
-#### Berechnungen manuell ####
+#### Berechnungen manuell #### (was geschieht im original excel)
 
 dataframe_2023 <- filter(dataframe_energy, Jahr == 2023)
 
