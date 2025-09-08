@@ -7,13 +7,24 @@
 rm(list = ls())
 
 # Scripts und libraries einlesen
-library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
+source(here::here("analyse/gemeinden.R"))
 library(readxl)
+library(stringr)
 
 
 #### INPUT DATEN ####
 
 current_year <- as.integer(format(Sys.Date(), "%Y"))
+
+gemeinden_zh_clean <- gemeinden_zh %>%
+  mutate(gemeinde_clean = word(gemeinde, 1),
+         gemeinde_clean = case_when(
+           gemeinde_clean == "Oetwil" & str_detect(gemeinde, regex("see", ignore_case = TRUE)) ~ "Oetwil am See",
+           gemeinde_clean == "Oetwil" & str_detect(gemeinde, regex("limmat", ignore_case = TRUE)) ~ "Oetwil an der Limmat",
+           TRUE ~ gemeinde_clean
+         )
+  )
+
 
 gruengut_orig <- read_excel("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Grüngut/Energiezahlen 20 Jahre.xlsx", col_names = F)
 
@@ -25,6 +36,31 @@ gruengut_input <- gruengut_orig %>%
     colnames(.) <- .[1, ]
     slice(., -1)
   }
+
+
+gruengut_umweko_orig <- read_excel("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Grüngut/Mengen-Bilanz 2024.xlsx", col_names = F)
+
+header_row <- which(apply(gruengut_umweko_orig, 1, function(x) any(grepl("PLZ", x))))
+
+colnames(gruengut_umweko_orig) <- make.names(
+  as.character(unlist(gruengut_umweko_orig[header_row, ])),
+  unique = TRUE
+)
+
+gruengut_umweko_input <- gruengut_umweko_orig[-c(1:header_row), ] %>%
+  filter(!is.na(Anlage)) %>%
+  mutate(
+    Anlage_clean = str_remove(word(Anlage, 1, sep = fixed(" ")), ","),
+    Anlage_clean = case_when(
+      Anlage_clean == "Oetwil" & PLZ == "8618" ~ "Oetwil am See",
+      Anlage_clean == "Oetwil" & PLZ == "8955" ~ "Oetwil an der Limmat",  # falls du den zweiten auch gleich abfangen willst
+      TRUE ~ Anlage_clean
+    )
+  ) %>%
+  left_join(gemeinden_zh_clean, by = c("Anlage_clean" = "gemeinde_clean"))
+
+
+### AB HIER - PLZ noch berücksichtigen!!!
 
 
 
