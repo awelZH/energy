@@ -1,16 +1,25 @@
 #### Sonne ####
 
 # Für die Energiestatistik werden auch Angaben zu Solaranlagen ausgewertet
-# Die Daten für PV-Anlagen liegen OGD als csv vor und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden. Die Daten für thermische Anlagen sind in der Teilenergiestatistik erneuerbare Energien und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
 
-#rm(list = ls())
+rm(list = ls())
 
 
 # Scripts und libraries einlesen
 source(here::here("analyse/gemeinden.R"))
+source(here::here("analyse/bevoelkerung.R"))
 source(here::here("analyse/functions.R"))
 library(tcltk)
+library(httr)
+library(readxl)
 
+
+############
+#### PV ####
+############
+
+
+# Die Daten für PV-Anlagen liegen OGD als csv vor und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden. Die Daten für thermische Anlagen sind in der Teilenergiestatistik erneuerbare Energien und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
 
 
 #### INPUT UND AUFBEREITUNG DATEN ####
@@ -218,10 +227,11 @@ solar_pv_final <- tibble(pv) %>%
       variable == "cum_anzahl"    ~ "Anzahl"
     ),
     ort = gemeinde,
-    rubrik = "Strom",
+    rubrik = "Sonne",
     thema = "PV",
+    subthema = ""
   ) %>%
-  select(jahr, ort, bfsnr, rubrik, thema, wert, einheit)
+  select(jahr, ort, bfsnr, rubrik, thema, subthema, wert, einheit)
 
 
 #Kantonsdaten 
@@ -236,6 +246,69 @@ solar_pv_final <- tibble(pv) %>%
 write_excel_csv(solar_pv_final, here::here("data/output/solar_pv.csv"), delim = ";")
 
 
+
+###############
+#### Sonne ####
+###############
+
+# Für die Energiestatistik werden auch Angaben zu thermischen Solaranlagen ausgewertet
+# Die Daten für die Anlagen sind in der Teilenergiestatistik erneuerbare Energien und können daher direkt mit R eingelesen, umgeformt und ausgewertet werden.
+
+
+#### INPUT UND AUFBEREITUNG DATEN ####
+
+temp_file <- tempfile(fileext = ".xlsx")
+GET("https://pubdb.bfe.admin.ch/de/publication/download/8787", write_disk(temp_file, overwrite = TRUE)) #s. https://pubdb.bfe.admin.ch/de/suche?keywords=404
+
+input_bfe_solar_th <- read_excel(temp_file, sheet = "Anhang B", skip = 2)
+
+
+#### DATENVERARBEITUNG ####
+
+solar_th_final <- input_bfe_solar_th %>%
+  pivot_longer(cols = names(input_bfe_solar_th[(which(names(input_bfe_solar_th) == "Einheit")+1):(which(names(input_bfe_solar_th) == "Herkunft")-1)]), #Jahreszahlen befinden sich zw. den Spalten "Einheit" und "Herkunft"
+               names_to = "jahr",       # Die neuen Spaltennamen (Jahreszahlen) werden hier gespeichert
+               values_to = "wert") %>%  # Die Werte werden in die neue Spalte "Wert" verschoben
+  mutate(jahr = as.numeric(sub("X", "", jahr))) %>%  # Entferne das 'X' und konvertiere in numerische Werte
+  select(Technologie, Zeileninhalt, Einheit, jahr, wert) %>%
+  filter(str_starts(Technologie, "Unverglaste") | str_starts(Technologie, "Röhren")) %>%
+  filter(Zeileninhalt == "Wärmeertrag") %>%
+  mutate(
+    Technologie = case_when(
+      str_starts(Technologie, "Röhren") ~ "solar_th_verglast_gwh_ch",
+      str_starts(Technologie, "Unverglaste") ~ "solar_th_unverglast_gwh_ch",
+      TRUE ~ Technologie)) %>%
+  pivot_wider(names_from = Technologie, values_from = wert) %>%
+  select(jahr, solar_th_verglast_gwh_ch, solar_th_unverglast_gwh_ch) %>%
+  left_join(bevoelkerung_final %>% select(jahr, verhaeltnis_ch_zh), by = "jahr") %>%
+  mutate(
+    "Kollektor verglast" = as.numeric(solar_th_verglast_gwh_ch) / verhaeltnis_ch_zh,
+    "Kollektor unverglast" = as.numeric(solar_th_unverglast_gwh_ch) / verhaeltnis_ch_zh
+  ) %>%
+  pivot_longer(
+    cols = c("Kollektor verglast", "Kollektor unverglast"),
+    names_to = "subthema",
+    values_to = "wert"
+  ) %>%
+  mutate(
+    einheit = "GWh",
+    rubrik = "Sonne",
+    thema = "Thermische Anlagen",
+    ort = "Kanton ZH",
+    bfsnr = as.integer(NA)
+  ) %>%
+  select(jahr, ort, bfsnr, rubrik, thema, subthema, wert, einheit)
+
+
+write_excel_csv(solar_th_final, here::here("data/output/solar_th.csv"), delim = ";")
+
+
+
+### FINALER DATENSATZ ###
+
+sonne_final <- rbind(solar_pv_final, solar_th_final)
+
+write_excel_csv(sonne_final, here::here("data/output/sonne.csv"), delim = ";")
 
 
 

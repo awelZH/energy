@@ -8,9 +8,6 @@ rm(list = ls())
 
 # Scripts und libraries einlesen
 source(here::here("analyse/gemeinden.R"))
-library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
-library(sf)
-library(readr)
 library(readxl)
 
 
@@ -20,7 +17,7 @@ ara_input_ekz <- as.data.frame(read_xls("K:/BD-AWEL-050-EN/Elektrizitätswirtsch
 
 ara_input_ewz <- read_xlsx("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/ARA/Gelieferte Energiemengen aus gereinigtem Abwasser EDL.xlsx")
 
-ara_olddata <- read.csv(here::here("data/output/ara_anlagen.csv"), sep=";")
+ara_olddata <- read.csv(here::here("data/input/ara_anlagen_28_08_25.csv"), sep=";")
 
 ara_potenzial_2022 <- read.csv(here::here("data/input/ara_potenzial_2022.csv"), sep=";")
 
@@ -94,15 +91,12 @@ ekz_prov2 <- ekz_prov %>%
 ekz_final <- ekz_prov2 %>%
   mutate(matched_name = sapply(clean_name, function(x) match_names(x, gemeinden_zh$gemeinde, threshold = 0.1))) %>% # Join mit dem BFS-Nummern-Datensatz
   left_join(gemeinden_zh, by = c("matched_name" = "gemeinde")) %>%
-  left_join(ara_olddata %>% select(ort, bfsnr), by = "bfsnr") %>%
+  left_join(ara_olddata %>% select(ort, bfsnr), by = "bfsnr", relationship = "many-to-many") %>%
   distinct() %>%
   mutate(selected_value = case_when(grepl("\\(", ort.x) ~ ort.x, grepl("\\(", ort.y) ~ ort.y, TRUE ~ coalesce(ort.x, ort.y))) %>% #Auswahl des priorisierten Anlagenamens (grundsätzlich Namen mit Ergänzungen bevorzugen)
   mutate(jahr = jahr_datensatz, rubrik = "Wärme", thema = "ARA", einheit = "MWh",  ort = selected_value) %>%
   select(jahr, rubrik, thema, wert, einheit, ort, bfsnr) %>%
   distinct()
-
-# Warnung many-to-many realationship ist kein Problem
-
 
 # ewz Daten (Werdhölzli)
 
@@ -156,29 +150,31 @@ write_excel_csv2(ara_final_anlage, here::here("data/output/ara_anlagen.csv"))
 ## Finalisieren
 
 ara_final <- ara_final_anlage %>%
-  left_join(ara_potenzial_2022 %>% select(bfsnr, wert), by = "bfsnr", suffix = c("", "_pot")) %>%
+  left_join(ara_potenzial_2022 %>% select(bfsnr, wert), by = "bfsnr", suffix = c("", "_pot"), relationship = "many-to-many") %>%
   distinct() %>%
   group_by(bfsnr, jahr)  %>%
   mutate(wert_pot = wert_pot / n()) %>% 
   summarise(wert_gem = sum(wert, na.rm = TRUE), wert_pot_gem = sum(wert_pot, na.rm = TRUE), .groups = 'drop') %>%
-  left_join(gemeinden, by = "bfsnr") %>%
+  left_join(gemeinden_zh, by = "bfsnr") %>%
   mutate(wert_pot_ungenutzt_gem = wert_pot_gem - wert_gem,
-         rubrik = "Wärme",
-         thema = "ARA",
-         ort = name) %>%
+         rubrik = "ARA",
+         ort = gemeinde) %>%
   pivot_longer(
     cols = c(wert_gem, wert_pot_gem, wert_pot_ungenutzt_gem),
-    names_to = "subthema",
+    names_to = "wert_pivot_long",
     values_to = "wert"
   ) %>%
   mutate(
-    subthema = case_when(
-      subthema == "wert_gem" ~ "Potenzial genutzt",
-      subthema == "wert_pot_gem" ~ "Potenzial",
-      subthema == "wert_pot_ungenutzt_gem" ~ "Potenzial ungenutzt"
-    )
+    thema = case_when(
+      wert_pivot_long == "wert_gem" ~ "Wärmepotenzial genutzt",
+      wert_pivot_long == "wert_pot_gem" ~ "Wärmepotenzial",
+      wert_pivot_long == "wert_pot_ungenutzt_gem" ~ "Wärmepotenzial ungenutzt"
+    ),
+    einheit = "MWh"
   ) %>%
-  select(jahr, rubrik, thema, subthema, wert, ort, bfsnr)
+  select(jahr, ort, bfsnr, rubrik, thema, wert, einheit) %>%
+  arrange(ort, jahr)
+
 
 
 write_excel_csv2(ara_final, here::here("data/output/ara.csv"))

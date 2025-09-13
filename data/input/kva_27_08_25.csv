@@ -1,0 +1,643 @@
+﻿jahr;bfsnr;ort;anlage;rubrik;thema;wert;einheit
+2001;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;19567;MWh
+2001;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;108341;MWh
+2001;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;302611;MWh
+2001;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;88370;MWh
+2001;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;18262;MWh
+2001;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;47321;MWh
+2002;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;17400;MWh
+2002;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;107002;MWh
+2002;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;325711;MWh
+2002;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;91484;MWh
+2002;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;18048;MWh
+2002;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;66262;MWh
+2003;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;20020;MWh
+2003;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;90029;MWh
+2003;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;309934;MWh
+2003;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;97919;MWh
+2003;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;19824;MWh
+2003;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;47839;MWh
+2004;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;18481;MWh
+2004;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;102480;MWh
+2004;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;299146;MWh
+2004;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;100642;MWh
+2004;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;19734;MWh
+2004;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;48040;MWh
+2005;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;20274;MWh
+2005;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;93207;MWh
+2005;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;313901;MWh
+2005;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;96593;MWh
+2005;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;21123;MWh
+2005;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;48142;MWh
+2006;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;21631;MWh
+2006;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;100546;MWh
+2006;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;338864;MWh
+2006;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;97933;MWh
+2006;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;20642;MWh
+2006;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;48432;MWh
+2007;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;19436;MWh
+2007;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;92510;MWh
+2007;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;318597;MWh
+2007;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;86362;MWh
+2007;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;21018;MWh
+2007;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;40753;MWh
+2008;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;20481;MWh
+2008;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;84752;MWh
+2008;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;306620;MWh
+2008;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;102384;MWh
+2008;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;23400;MWh
+2008;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;45637;MWh
+2009;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;26223;MWh
+2009;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;88726;MWh
+2009;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;327514;MWh
+2009;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;99183;MWh
+2009;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;24079;MWh
+2009;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;44671;MWh
+2010;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;40754;MWh
+2010;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;102068;MWh
+2010;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;366260;MWh
+2010;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;120744;MWh
+2010;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;25243;MWh
+2010;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;47848;MWh
+2011;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;42403;MWh
+2011;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;83633;MWh
+2011;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;399874;MWh
+2011;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;113433;MWh
+2011;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;22208;MWh
+2011;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;42007;MWh
+2012;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;38819;MWh
+2012;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;89026;MWh
+2012;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;423164;MWh
+2012;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;117348;MWh
+2012;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;23271;MWh
+2012;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;46939;MWh
+2013;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;41225;MWh
+2013;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;92895;MWh
+2013;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;403736;MWh
+2013;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;141284;MWh
+2013;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;23930;MWh
+2013;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;48427;MWh
+2014;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;37415;MWh
+2014;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;88274;MWh
+2014;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;420710;MWh
+2014;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;116568;MWh
+2014;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;23335;MWh
+2014;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;39440;MWh
+2015;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;56583;MWh
+2015;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;104237;MWh
+2015;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;434965;MWh
+2015;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;147438;MWh
+2015;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;25912;MWh
+2015;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;38171;MWh
+2016;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;62015;MWh
+2016;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;102088;MWh
+2016;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;427667;MWh
+2016;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;175288;MWh
+2016;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;26752;MWh
+2016;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;37169;MWh
+2017;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;57644;MWh
+2017;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;111946;MWh
+2017;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;420738;MWh
+2017;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;171022;MWh
+2017;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;25520;MWh
+2017;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;40791;MWh
+2018;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;60391;MWh
+2018;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;111272;MWh
+2018;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;419217;MWh
+2018;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;167119;MWh
+2018;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;33148;MWh
+2018;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;38623;MWh
+2019;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;59127;MWh
+2019;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;103598;MWh
+2019;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;450052;MWh
+2019;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;182824;MWh
+2019;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;65334;MWh
+2019;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;41384;MWh
+2020;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;57258;MWh
+2020;261;Zürich;ERZ Josefstrasse;KVA;Wärmeabsatz;105065;MWh
+2020;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;444768;MWh
+2020;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;184727;MWh
+2020;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;74540;MWh
+2020;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;43756;MWh
+2021;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;61870;MWh
+2021;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;474162;MWh
+2021;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;201812;MWh
+2021;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;99029;MWh
+2021;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;46222;MWh
+2022;117;Hinwil;KEZO Hinwil;KVA;Wärmeabsatz;49212;MWh
+2022;261;Zürich;ERZ Hagenholz;KVA;Wärmeabsatz;417981;MWh
+2022;230;Winterthur;KVA Winterthur;KVA;Wärmeabsatz;178347;MWh
+2022;243;Dietikon;KV Limeco;KVA;Wärmeabsatz;102086;MWh
+2022;295;Horgen;KVA Horgen;KVA;Wärmeabsatz;43344;MWh
+2001;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;89180;MWh
+2001;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;47727;MWh
+2001;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;32227;MWh
+2001;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;76145;MWh
+2001;243;Dietikon;KV Limeco;KVA;Stromproduktion;57062;MWh
+2001;295;Horgen;KVA Horgen;KVA;Stromproduktion;19868;MWh
+2002;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;99354;MWh
+2002;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;56993;MWh
+2002;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;32728;MWh
+2002;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;76678;MWh
+2002;243;Dietikon;KV Limeco;KVA;Stromproduktion;57291;MWh
+2002;295;Horgen;KVA Horgen;KVA;Stromproduktion;19882;MWh
+2003;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;102929;MWh
+2003;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;41964;MWh
+2003;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;30459;MWh
+2003;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;67135;MWh
+2003;243;Dietikon;KV Limeco;KVA;Stromproduktion;60361;MWh
+2003;295;Horgen;KVA Horgen;KVA;Stromproduktion;18832;MWh
+2004;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;98698;MWh
+2004;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;38301;MWh
+2004;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;29384;MWh
+2004;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;86385;MWh
+2004;243;Dietikon;KV Limeco;KVA;Stromproduktion;54381;MWh
+2004;295;Horgen;KVA Horgen;KVA;Stromproduktion;20789;MWh
+2005;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;113238;MWh
+2005;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;57936;MWh
+2005;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;33656;MWh
+2005;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;85701;MWh
+2005;243;Dietikon;KV Limeco;KVA;Stromproduktion;53480;MWh
+2005;295;Horgen;KVA Horgen;KVA;Stromproduktion;20056;MWh
+2006;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;115549;MWh
+2006;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;70439;MWh
+2006;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;58131;MWh
+2006;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;92731;MWh
+2006;243;Dietikon;KV Limeco;KVA;Stromproduktion;66022;MWh
+2006;295;Horgen;KVA Horgen;KVA;Stromproduktion;20852;MWh
+2007;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;113455;MWh
+2007;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;67023;MWh
+2007;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;72399;MWh
+2007;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;76887;MWh
+2007;243;Dietikon;KV Limeco;KVA;Stromproduktion;60113;MWh
+2007;295;Horgen;KVA Horgen;KVA;Stromproduktion;23664;MWh
+2008;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;114516;MWh
+2008;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;71693;MWh
+2008;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;65714;MWh
+2008;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;91320;MWh
+2008;243;Dietikon;KV Limeco;KVA;Stromproduktion;61190;MWh
+2008;295;Horgen;KVA Horgen;KVA;Stromproduktion;26904;MWh
+2009;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;116704;MWh
+2009;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;63071;MWh
+2009;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;89798;MWh
+2009;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;57558;MWh
+2009;243;Dietikon;KV Limeco;KVA;Stromproduktion;64593;MWh
+2009;295;Horgen;KVA Horgen;KVA;Stromproduktion;27449;MWh
+2010;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;113113;MWh
+2010;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;69873;MWh
+2010;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;92073;MWh
+2010;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;43219;MWh
+2010;243;Dietikon;KV Limeco;KVA;Stromproduktion;62151;MWh
+2010;295;Horgen;KVA Horgen;KVA;Stromproduktion;27322;MWh
+2011;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;123308;MWh
+2011;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;45906;MWh
+2011;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;119349;MWh
+2011;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;42931;MWh
+2011;243;Dietikon;KV Limeco;KVA;Stromproduktion;65698;MWh
+2011;295;Horgen;KVA Horgen;KVA;Stromproduktion;28656;MWh
+2012;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;123522;MWh
+2012;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;46132;MWh
+2012;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;107491;MWh
+2012;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;82586;MWh
+2012;243;Dietikon;KV Limeco;KVA;Stromproduktion;63989;MWh
+2012;295;Horgen;KVA Horgen;KVA;Stromproduktion;28207;MWh
+2013;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;123695;MWh
+2013;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;45033;MWh
+2013;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;121099;MWh
+2013;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;117761;MWh
+2013;243;Dietikon;KV Limeco;KVA;Stromproduktion;64016;MWh
+2013;295;Horgen;KVA Horgen;KVA;Stromproduktion;28003;MWh
+2014;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;123913;MWh
+2014;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;48488;MWh
+2014;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;125473;MWh
+2014;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;109741;MWh
+2014;243;Dietikon;KV Limeco;KVA;Stromproduktion;66782;MWh
+2014;295;Horgen;KVA Horgen;KVA;Stromproduktion;29549;MWh
+2015;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;113394;MWh
+2015;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;46374;MWh
+2015;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;116769;MWh
+2015;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;134087;MWh
+2015;243;Dietikon;KV Limeco;KVA;Stromproduktion;65232;MWh
+2015;295;Horgen;KVA Horgen;KVA;Stromproduktion;13753;MWh
+2016;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;132140;MWh
+2016;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;44748;MWh
+2016;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;127329;MWh
+2016;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;135626;MWh
+2016;243;Dietikon;KV Limeco;KVA;Stromproduktion;70431;MWh
+2016;295;Horgen;KVA Horgen;KVA;Stromproduktion;16466;MWh
+2017;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;134428;MWh
+2017;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;45366;MWh
+2017;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;127257;MWh
+2017;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;135682;MWh
+2017;243;Dietikon;KV Limeco;KVA;Stromproduktion;67333;MWh
+2017;295;Horgen;KVA Horgen;KVA;Stromproduktion;23074;MWh
+2018;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;124558;MWh
+2018;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;45128;MWh
+2018;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;127429;MWh
+2018;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;120314;MWh
+2018;243;Dietikon;KV Limeco;KVA;Stromproduktion;68160;MWh
+2018;295;Horgen;KVA Horgen;KVA;Stromproduktion;22814;MWh
+2019;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;130286;MWh
+2019;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;46658;MWh
+2019;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;126508;MWh
+2019;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;135148;MWh
+2019;243;Dietikon;KV Limeco;KVA;Stromproduktion;61841;MWh
+2019;295;Horgen;KVA Horgen;KVA;Stromproduktion;22687;MWh
+2020;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;133913;MWh
+2020;261;Zürich;ERZ Josefstrasse;KVA;Stromproduktion;46118;MWh
+2020;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;126866;MWh
+2020;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;132257;MWh
+2020;243;Dietikon;KV Limeco;KVA;Stromproduktion;60361;MWh
+2020;295;Horgen;KVA Horgen;KVA;Stromproduktion;23346;MWh
+2021;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;133454;MWh
+2021;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;96652;MWh
+2021;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;121499;MWh
+2021;243;Dietikon;KV Limeco;KVA;Stromproduktion;57285;MWh
+2021;295;Horgen;KVA Horgen;KVA;Stromproduktion;22090;MWh
+2022;117;Hinwil;KEZO Hinwil;KVA;Stromproduktion;119469;MWh
+2022;261;Zürich;ERZ Hagenholz;KVA;Stromproduktion;76373;MWh
+2022;230;Winterthur;KVA Winterthur;KVA;Stromproduktion;114099;MWh
+2022;243;Dietikon;KV Limeco;KVA;Stromproduktion;54806;MWh
+2022;295;Horgen;KVA Horgen;KVA;Stromproduktion;22288;MWh
+2009;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;91431;MWh
+2009;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;43439;MWh
+2009;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;73886;MWh
+2009;;Winterthur;KVA Winterthur;KVA;Stromabsatz;41613;MWh
+2009;;Dietikon;KV Limeco;KVA;Stromabsatz;50687;MWh
+2009;;Horgen;KVA Horgen;KVA;Stromabsatz;18192;MWh
+2010;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;89089;MWh
+2010;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;49904;MWh
+2010;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;68691;MWh
+2010;;Winterthur;KVA Winterthur;KVA;Stromabsatz;31585;MWh
+2010;;Dietikon;KV Limeco;KVA;Stromabsatz;47919;MWh
+2010;;Horgen;KVA Horgen;KVA;Stromabsatz;18131;MWh
+2011;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;98781;MWh
+2011;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;32098;MWh
+2011;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;92843;MWh
+2011;;Winterthur;KVA Winterthur;KVA;Stromabsatz;30420;MWh
+2011;;Dietikon;KV Limeco;KVA;Stromabsatz;48954;MWh
+2011;;Horgen;KVA Horgen;KVA;Stromabsatz;19382;MWh
+2012;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;99645;MWh
+2012;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;32328;MWh
+2012;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;82477;MWh
+2012;;Winterthur;KVA Winterthur;KVA;Stromabsatz;64154;MWh
+2012;;Dietikon;KV Limeco;KVA;Stromabsatz;48976;MWh
+2012;;Horgen;KVA Horgen;KVA;Stromabsatz;19033;MWh
+2013;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;102441;MWh
+2013;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;31413;MWh
+2013;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;96570;MWh
+2013;;Winterthur;KVA Winterthur;KVA;Stromabsatz;89136;MWh
+2013;;Dietikon;KV Limeco;KVA;Stromabsatz;50627;MWh
+2013;;Horgen;KVA Horgen;KVA;Stromabsatz;18862;MWh
+2014;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;102341;MWh
+2014;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;33837;MWh
+2014;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;101598;MWh
+2014;;Winterthur;KVA Winterthur;KVA;Stromabsatz;89204;MWh
+2014;;Dietikon;KV Limeco;KVA;Stromabsatz;53094;MWh
+2014;;Horgen;KVA Horgen;KVA;Stromabsatz;20463;MWh
+2015;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;91368;MWh
+2015;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;31909;MWh
+2015;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;95197;MWh
+2015;;Winterthur;KVA Winterthur;KVA;Stromabsatz;109850;MWh
+2015;;Dietikon;KV Limeco;KVA;Stromabsatz;51773;MWh
+2015;;Horgen;KVA Horgen;KVA;Stromabsatz;8839;MWh
+2016;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;110190;MWh
+2016;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;30677;MWh
+2016;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;104570;MWh
+2016;;Winterthur;KVA Winterthur;KVA;Stromabsatz;108663;MWh
+2016;;Dietikon;KV Limeco;KVA;Stromabsatz;55517;MWh
+2016;;Horgen;KVA Horgen;KVA;Stromabsatz;12603;MWh
+2017;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;112274;MWh
+2017;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;30757;MWh
+2017;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;104002;MWh
+2017;;Winterthur;KVA Winterthur;KVA;Stromabsatz;108547;MWh
+2017;;Dietikon;KV Limeco;KVA;Stromabsatz;53305;MWh
+2017;;Horgen;KVA Horgen;KVA;Stromabsatz;18954;MWh
+2018;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;102184;MWh
+2018;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;31213;MWh
+2018;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;104084;MWh
+2018;;Winterthur;KVA Winterthur;KVA;Stromabsatz;96131;MWh
+2018;;Dietikon;KV Limeco;KVA;Stromabsatz;54388;MWh
+2018;;Horgen;KVA Horgen;KVA;Stromabsatz;18818;MWh
+2019;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;108743;MWh
+2019;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;31655;MWh
+2019;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;103211;MWh
+2019;;Winterthur;KVA Winterthur;KVA;Stromabsatz;108015;MWh
+2019;;Dietikon;KV Limeco;KVA;Stromabsatz;42661;MWh
+2019;;Horgen;KVA Horgen;KVA;Stromabsatz;18776;MWh
+2020;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;111906;MWh
+2020;;Zürich;ERZ Josefstrasse;KVA;Stromabsatz;31175;MWh
+2020;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;103405;MWh
+2020;;Winterthur;KVA Winterthur;KVA;Stromabsatz;105548;MWh
+2020;;Dietikon;KV Limeco;KVA;Stromabsatz;46329;MWh
+2020;;Horgen;KVA Horgen;KVA;Stromabsatz;19585;MWh
+2021;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;111731;MWh
+2021;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;72813;MWh
+2021;;Winterthur;KVA Winterthur;KVA;Stromabsatz;93862;MWh
+2021;;Dietikon;KV Limeco;KVA;Stromabsatz;44043;MWh
+2021;;Horgen;KVA Horgen;KVA;Stromabsatz;18439;MWh
+2022;;Hinwil;KEZO Hinwil;KVA;Stromabsatz;99304;MWh
+2022;;Zürich;ERZ Hagenholz;KVA;Stromabsatz;54709;MWh
+2022;;Winterthur;KVA Winterthur;KVA;Stromabsatz;87932;MWh
+2022;;Dietikon;KV Limeco;KVA;Stromabsatz;41465;MWh
+2022;;Horgen;KVA Horgen;KVA;Stromabsatz;18602;MWh
+2001;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;543657;MWh
+2001;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;348952;MWh
+2001;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;414963;MWh
+2001;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;409930;MWh
+2001;243;Dietikon;KV Limeco;KVA;Dampfproduktion;289683;MWh
+2001;295;Horgen;KVA Horgen;KVA;Dampfproduktion;158463;MWh
+2002;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;678803;MWh
+2002;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;387818;MWh
+2002;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;434313;MWh
+2002;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;413006;MWh
+2002;243;Dietikon;KV Limeco;KVA;Dampfproduktion;291514;MWh
+2002;295;Horgen;KVA Horgen;KVA;Dampfproduktion;158151;MWh
+2003;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;581368;MWh
+2003;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;339049;MWh
+2003;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;411965;MWh
+2003;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;403406;MWh
+2003;243;Dietikon;KV Limeco;KVA;Dampfproduktion;306616;MWh
+2003;295;Horgen;KVA Horgen;KVA;Dampfproduktion;143755;MWh
+2004;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;416476;MWh
+2004;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;407261;MWh
+2004;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;506703;MWh
+2004;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;456922;MWh
+2004;243;Dietikon;KV Limeco;KVA;Dampfproduktion;244093;MWh
+2004;295;Horgen;KVA Horgen;KVA;Dampfproduktion;166614;MWh
+2005;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;498159;MWh
+2005;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;379240;MWh
+2005;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;421394;MWh
+2005;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;476332;MWh
+2005;243;Dietikon;KV Limeco;KVA;Dampfproduktion;246028;MWh
+2005;295;Horgen;KVA Horgen;KVA;Dampfproduktion;165902;MWh
+2006;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;495077;MWh
+2006;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;419257;MWh
+2006;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;472177;MWh
+2006;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;501494;MWh
+2006;243;Dietikon;KV Limeco;KVA;Dampfproduktion;255219;MWh
+2006;295;Horgen;KVA Horgen;KVA;Dampfproduktion;171244;MWh
+2007;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;490043;MWh
+2007;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;389540;MWh
+2007;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;453647;MWh
+2007;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;520373;MWh
+2007;243;Dietikon;KV Limeco;KVA;Dampfproduktion;292734;MWh
+2007;295;Horgen;KVA Horgen;KVA;Dampfproduktion;144989;MWh
+2008;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;535517;MWh
+2008;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;423061;MWh
+2008;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;427800;MWh
+2008;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;529785;MWh
+2008;243;Dietikon;KV Limeco;KVA;Dampfproduktion;276784;MWh
+2008;295;Horgen;KVA Horgen;KVA;Dampfproduktion;158575;MWh
+2009;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;494074;MWh
+2009;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;405863;MWh
+2009;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;521262;MWh
+2009;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;361830;MWh
+2009;243;Dietikon;KV Limeco;KVA;Dampfproduktion;310222;MWh
+2009;295;Horgen;KVA Horgen;KVA;Dampfproduktion;171322;MWh
+2010;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;528494;MWh
+2010;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;437746;MWh
+2010;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;526151;MWh
+2010;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;299694;MWh
+2010;243;Dietikon;KV Limeco;KVA;Dampfproduktion;299673;MWh
+2010;295;Horgen;KVA Horgen;KVA;Dampfproduktion;170400;MWh
+2011;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;580417;MWh
+2011;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;311369;MWh
+2011;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;665753;MWh
+2011;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;306460;MWh
+2011;243;Dietikon;KV Limeco;KVA;Dampfproduktion;311303;MWh
+2011;295;Horgen;KVA Horgen;KVA;Dampfproduktion;173538;MWh
+2012;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;597720;MWh
+2012;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;305354;MWh
+2012;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;667648;MWh
+2012;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;438120;MWh
+2012;243;Dietikon;KV Limeco;KVA;Dampfproduktion;305300;MWh
+2012;295;Horgen;KVA Horgen;KVA;Dampfproduktion;174090;MWh
+2013;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;505081;MWh
+2013;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;315139;MWh
+2013;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;638196;MWh
+2013;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;498053;MWh
+2013;243;Dietikon;KV Limeco;KVA;Dampfproduktion;249074;MWh
+2013;295;Horgen;KVA Horgen;KVA;Dampfproduktion;177711;MWh
+2014;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;503933;MWh
+2014;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;313726;MWh
+2014;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;668643;MWh
+2014;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;456481;MWh
+2014;243;Dietikon;KV Limeco;KVA;Dampfproduktion;256914;MWh
+2014;295;Horgen;KVA Horgen;KVA;Dampfproduktion;176559;MWh
+2015;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;511727;MWh
+2015;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;316219;MWh
+2015;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;667942;MWh
+2015;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;551556;MWh
+2015;243;Dietikon;KV Limeco;KVA;Dampfproduktion;253079;MWh
+2015;295;Horgen;KVA Horgen;KVA;Dampfproduktion;103757;MWh
+2016;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;525823;MWh
+2016;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;305652;MWh
+2016;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;657858;MWh
+2016;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;564477;MWh
+2016;243;Dietikon;KV Limeco;KVA;Dampfproduktion;263753;MWh
+2016;295;Horgen;KVA Horgen;KVA;Dampfproduktion;100242;MWh
+2017;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;536629;MWh
+2017;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;309460;MWh
+2017;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;661582;MWh
+2017;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;576387;MWh
+2017;243;Dietikon;KV Limeco;KVA;Dampfproduktion;255822;MWh
+2017;295;Horgen;KVA Horgen;KVA;Dampfproduktion;106147;MWh
+2018;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;523305;MWh
+2018;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;316599;MWh
+2018;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;659458;MWh
+2018;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;578325;MWh
+2018;243;Dietikon;KV Limeco;KVA;Dampfproduktion;259505;MWh
+2018;295;Horgen;KVA Horgen;KVA;Dampfproduktion;107396;MWh
+2019;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;520606;MWh
+2019;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;312476;MWh
+2019;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;653151;MWh
+2019;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;576823;MWh
+2019;243;Dietikon;KV Limeco;KVA;Dampfproduktion;260429;MWh
+2019;295;Horgen;KVA Horgen;KVA;Dampfproduktion;105047;MWh
+2020;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;531482;MWh
+2020;261;Zürich;ERZ Josefstrasse;KVA;Dampfproduktion;312663;MWh
+2020;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;661975;MWh
+2020;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;573356;MWh
+2020;243;Dietikon;KV Limeco;KVA;Dampfproduktion;263593;MWh
+2020;295;Horgen;KVA Horgen;KVA;Dampfproduktion;108298;MWh
+2021;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;527886;MWh
+2021;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;654203;MWh
+2021;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;543275;MWh
+2021;243;Dietikon;KV Limeco;KVA;Dampfproduktion;248482;MWh
+2021;295;Horgen;KVA Horgen;KVA;Dampfproduktion;104637;MWh
+2022;117;Hinwil;KEZO Hinwil;KVA;Dampfproduktion;482614;MWh
+2022;261;Zürich;ERZ Hagenholz;KVA;Dampfproduktion;585034;MWh
+2022;230;Winterthur;KVA Winterthur;KVA;Dampfproduktion;514747;MWh
+2022;243;Dietikon;KV Limeco;KVA;Dampfproduktion;247719;MWh
+2022;295;Horgen;KVA Horgen;KVA;Dampfproduktion;104390;MWh
+2005;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;177958;t
+2005;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;161717;t
+2005;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;165772;t
+2005;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;165998;t
+2005;243;Dietikon;KV Limeco;KVA;Abfallmenge;83204;t
+2005;295;Horgen;KVA Horgen;KVA;Abfallmenge;61043;t
+2006;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;;t
+2006;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;;t
+2006;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;;t
+2006;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;;t
+2006;243;Dietikon;KV Limeco;KVA;Abfallmenge;;t
+2006;295;Horgen;KVA Horgen;KVA;Abfallmenge;;t
+2007;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;;t
+2007;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;;t
+2007;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;;t
+2007;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;;t
+2007;243;Dietikon;KV Limeco;KVA;Abfallmenge;;t
+2007;295;Horgen;KVA Horgen;KVA;Abfallmenge;;t
+2008;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;;t
+2008;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;;t
+2008;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;;t
+2008;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;;t
+2008;243;Dietikon;KV Limeco;KVA;Abfallmenge;;t
+2008;295;Horgen;KVA Horgen;KVA;Abfallmenge;;t
+2009;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;200617;t
+2009;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;155319;t
+2009;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;219643;t
+2009;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;124838;t
+2009;243;Dietikon;KV Limeco;KVA;Abfallmenge;88418;t
+2009;295;Horgen;KVA Horgen;KVA;Abfallmenge;70017;t
+2010;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;191217;t
+2010;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;164455;t
+2010;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;209963;t
+2010;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;104834;t
+2010;243;Dietikon;KV Limeco;KVA;Abfallmenge;87221;t
+2010;295;Horgen;KVA Horgen;KVA;Abfallmenge;71124;t
+2011;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;206757;t
+2011;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;116928;t
+2011;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;272328;t
+2011;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;104677;t
+2011;243;Dietikon;KV Limeco;KVA;Abfallmenge;88377;t
+2011;295;Horgen;KVA Horgen;KVA;Abfallmenge;70130;t
+2012;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;188302;t
+2012;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;122000;t
+2012;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;268609;t
+2012;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;147853;t
+2012;243;Dietikon;KV Limeco;KVA;Abfallmenge;85984;t
+2012;295;Horgen;KVA Horgen;KVA;Abfallmenge;69717;t
+2013;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;194044;t
+2013;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;124736;t
+2013;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;258207;t
+2013;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;172495;t
+2013;243;Dietikon;KV Limeco;KVA;Abfallmenge;84744;t
+2013;295;Horgen;KVA Horgen;KVA;Abfallmenge;68571;t
+2014;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;193163;t
+2014;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;124053;t
+2014;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;265531;t
+2014;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;164610;t
+2014;243;Dietikon;KV Limeco;KVA;Abfallmenge;86302;t
+2014;295;Horgen;KVA Horgen;KVA;Abfallmenge;68762;t
+2015;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;190950;t
+2015;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;123438;t
+2015;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;254303;t
+2015;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;195275;t
+2015;243;Dietikon;KV Limeco;KVA;Abfallmenge;85266;t
+2015;295;Horgen;KVA Horgen;KVA;Abfallmenge;38222;t
+2016;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;186184;t
+2016;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;123937;t
+2016;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;250910;t
+2016;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;201438;t
+2016;243;Dietikon;KV Limeco;KVA;Abfallmenge;95690;t
+2016;295;Horgen;KVA Horgen;KVA;Abfallmenge;39107;t
+2017;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;188524;t
+2017;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;124806;t
+2017;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;240052;t
+2017;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;200728;t
+2017;243;Dietikon;KV Limeco;KVA;Abfallmenge;91119;t
+2017;295;Horgen;KVA Horgen;KVA;Abfallmenge;40013;t
+2018;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;183769;t
+2018;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;123856;t
+2018;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;250701;t
+2018;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;197578;t
+2018;243;Dietikon;KV Limeco;KVA;Abfallmenge;92600;t
+2018;295;Horgen;KVA Horgen;KVA;Abfallmenge;36044;t
+2019;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;189609;t
+2019;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;126957;t
+2019;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;244879;t
+2019;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;201006;t
+2019;243;Dietikon;KV Limeco;KVA;Abfallmenge;94112;t
+2019;295;Horgen;KVA Horgen;KVA;Abfallmenge;34953;t
+2020;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;187332;t
+2020;261;Zürich;ERZ Josefstrasse;KVA;Abfallmenge;126127;t
+2020;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;250254;t
+2020;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;194005;t
+2020;243;Dietikon;KV Limeco;KVA;Abfallmenge;93870;t
+2020;295;Horgen;KVA Horgen;KVA;Abfallmenge;36536;t
+2021;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;188334;t
+2021;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;259070;t
+2021;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;190880;t
+2021;243;Dietikon;KV Limeco;KVA;Abfallmenge;95354;t
+2021;295;Horgen;KVA Horgen;KVA;Abfallmenge;39747;t
+2022;117;Hinwil;KEZO Hinwil;KVA;Abfallmenge;170166;t
+2022;261;Zürich;ERZ Hagenholz;KVA;Abfallmenge;242742;t
+2022;230;Winterthur;KVA Winterthur;KVA;Abfallmenge;185807;t
+2022;243;Dietikon;KV Limeco;KVA;Abfallmenge;95047;t
+2022;295;Horgen;KVA Horgen;KVA;Abfallmenge;38541;t
+2012;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;188302;Hu
+2012;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;122000;Hu
+2012;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;268609;Hu
+2012;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;147853;Hu
+2012;243;Dietikon;KV Limeco;KVA;Heizwert Hu;85984;Hu
+2012;295;Horgen;KVA Horgen;KVA;Heizwert Hu;69717;Hu
+2013;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;194044;Hu
+2013;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;124736;Hu
+2013;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;258207;Hu
+2013;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;172495;Hu
+2013;243;Dietikon;KV Limeco;KVA;Heizwert Hu;84744;Hu
+2013;295;Horgen;KVA Horgen;KVA;Heizwert Hu;68571;Hu
+2014;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;193163;Hu
+2014;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;124053;Hu
+2014;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;265531;Hu
+2014;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;164610;Hu
+2014;243;Dietikon;KV Limeco;KVA;Heizwert Hu;86302;Hu
+2014;295;Horgen;KVA Horgen;KVA;Heizwert Hu;68762;Hu
+2015;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;190950;Hu
+2015;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;123438;Hu
+2015;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;254303;Hu
+2015;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;195275;Hu
+2015;243;Dietikon;KV Limeco;KVA;Heizwert Hu;85266;Hu
+2015;295;Horgen;KVA Horgen;KVA;Heizwert Hu;38222;Hu
+2016;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;186184;Hu
+2016;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;123937;Hu
+2016;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;250910;Hu
+2016;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;201438;Hu
+2016;243;Dietikon;KV Limeco;KVA;Heizwert Hu;95690;Hu
+2016;295;Horgen;KVA Horgen;KVA;Heizwert Hu;39107;Hu
+2017;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;188524;Hu
+2017;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;124806;Hu
+2017;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;240052;Hu
+2017;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;200728;Hu
+2017;243;Dietikon;KV Limeco;KVA;Heizwert Hu;91119;Hu
+2017;295;Horgen;KVA Horgen;KVA;Heizwert Hu;40013;Hu
+2018;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;183769;Hu
+2018;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;123856;Hu
+2018;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;250701;Hu
+2018;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;197578;Hu
+2018;243;Dietikon;KV Limeco;KVA;Heizwert Hu;92600;Hu
+2018;295;Horgen;KVA Horgen;KVA;Heizwert Hu;36044;Hu
+2019;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;189609;Hu
+2019;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;126957;Hu
+2019;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;244879;Hu
+2019;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;201006;Hu
+2019;243;Dietikon;KV Limeco;KVA;Heizwert Hu;94112;Hu
+2019;295;Horgen;KVA Horgen;KVA;Heizwert Hu;34953;Hu
+2020;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;187332;Hu
+2020;261;Zürich;ERZ Josefstrasse;KVA;Heizwert Hu;126127;Hu
+2020;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;250254;Hu
+2020;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;194005;Hu
+2020;243;Dietikon;KV Limeco;KVA;Heizwert Hu;93870;Hu
+2020;295;Horgen;KVA Horgen;KVA;Heizwert Hu;36536;Hu
+2021;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;188334;Hu
+2021;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;259070;Hu
+2021;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;190880;Hu
+2021;243;Dietikon;KV Limeco;KVA;Heizwert Hu;95354;Hu
+2021;295;Horgen;KVA Horgen;KVA;Heizwert Hu;39747;Hu
+2022;117;Hinwil;KEZO Hinwil;KVA;Heizwert Hu;170166;Hu
+2022;261;Zürich;ERZ Hagenholz;KVA;Heizwert Hu;242742;Hu
+2022;230;Winterthur;KVA Winterthur;KVA;Heizwert Hu;185807;Hu
+2022;243;Dietikon;KV Limeco;KVA;Heizwert Hu;95047;Hu
+2022;295;Horgen;KVA Horgen;KVA;Heizwert Hu;38541;Hu

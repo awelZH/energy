@@ -1,16 +1,18 @@
-#### Grüngut ####
-
-# Für die Energiestatistik werden auch Angaben zu Grüngut ausgewertet
-# Die Daten liegen als Excel-Daten vor und können mit R eingelesen, umgeformt und ausgewertet werden.
-
+#### Biogene Abfälle und Grüngut ####
 
 rm(list = ls())
 
 # Scripts und libraries einlesen
 source(here::here("analyse/gemeinden.R"))
 library(readxl)
-library(stringr)
 
+
+###################
+##### GRÜNGUT #####
+###################
+
+# Für die Energiestatistik werden auch Angaben zu Grüngut ausgewertet
+# Die Daten liegen als Excel-Daten vor und können mit R eingelesen, umgeformt und ausgewertet werden.
 
 #### INPUT DATEN ####
 
@@ -60,10 +62,6 @@ gruengut_umweko_input <- gruengut_umweko_orig[-c(1:header_row), ] %>%
   left_join(gemeinden_zh_clean, by = c("Anlage_clean" = "gemeinde_clean"))
 
 
-### AB HIER - PLZ noch berücksichtigen!!!
-
-
-
 #### DATENAUFBEREITUNG ####
 
 gruengut_final <- gruengut_input %>%
@@ -96,22 +94,73 @@ gruengut_final <- gruengut_input %>%
       variable == "gruengut_biogas_mwh_zh"    ~ "MWh",
       variable == "gruengut_holz_mwh_zh"    ~ "MWh"
     ),
-    subthema = case_when(
+    thema = case_when(
       variable == "gruengut_abwaerme_mwh_zh"   ~ "Abwärme",
       variable == "gruengut_strom_mwh_zh"  ~ "Strom",
       variable == "gruengut_biogas_mwh_zh"    ~ "Biogas",
       variable == "gruengut_holz_mwh_zh"    ~ "Holz"
     ),
-    rubrik = case_when(
-      variable == "gruengut_abwaerme_mwh_zh"   ~ "Wärme",
-      variable == "gruengut_strom_mwh_zh"  ~ "Wärme",
-      variable == "gruengut_biogas_mwh_zh"    ~ "Wärme",
-      variable == "gruengut_holz_mwh_zh"    ~ "Wärme"
-    ),
-    thema = "Grüngut",
+    rubrik = "Grüngut",
     ort = "Kanton ZH"
   ) %>%
-  select(jahr, ort, rubrik, thema, subthema, wert, einheit)
+  select(jahr, ort, rubrik, thema, wert, einheit)
 
 
 write_excel_csv(gruengut_final, here::here("data/output/gruengut.csv"), delim = ";")
+
+
+###########################
+##### BIOGENE ABFÄLLE #####
+###########################
+
+# Für die Energiestatistik werden auch Angaben zu biogenen Abfällen ausgewertet.
+# Die Daten liegen als Excel-Daten vor und können mit R eingelesen, umgeformt und ausgewertet werden.
+
+
+#### INPUT DATEN ####
+
+bioabfaelle_olddata <- read.csv(here::here("data/input/biogene_abfaelle_28_08_25.csv"), sep=";")
+
+bioabfaelle_input <- read_excel(
+  {
+    files <- list.files("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Biogene_Abfaelle/", pattern = "^biogene_abfaelle_input_\\d{4}\\.xlsx$", full.names = TRUE)
+    files[which.max(as.integer(str_extract(files, "\\d{4}")))]
+  }
+) %>%
+  mutate(jahr = max(as.integer(str_extract(list.files("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Biogene_Abfaelle/", pattern = "^biogene_abfaelle_input_\\d{4}\\.xlsx$"), "\\d{4}"))))
+
+bioabfaelle_jahresstand <- bioabfaelle_input %>%
+  setNames({
+    spalten <- names(bioabfaelle_input)
+    spalten[spalten != "jahr"] <- as.character(bioabfaelle_input[1, spalten != "jahr"])
+    spalten
+  }) %>%  # Spaltennamen setzen
+  slice(-1) %>%  # erste Zeile entfernen
+  select(anlage = "Standort", "jahr", wert = matches("(?i)mwh")) %>%
+  filter(!if_all(everything(), is.na), anlage != "Total") %>%
+  left_join(bioabfaelle_olddata %>% select(anlage, bfsnr, ort) %>% distinct(),
+            by = "anlage") %>%
+  mutate(
+    rubrik = "Biogene Abfälle",
+    thema = "Wärme",
+    einheit = "MWh"
+  ) %>%
+  select(jahr, ort, bfsnr, anlage, rubrik, thema, wert, einheit)
+
+# Max Jahre berechnen
+max_olddata <- max(bioabfaelle_olddata$jahr, na.rm = TRUE)
+max_newdata <- max(bioabfaelle_jahresstand$jahr, na.rm = TRUE)
+
+if (max_newdata > max_olddata) {
+  bioabfaelle_final <- rbind(bioabfaelle_olddata, bioabfaelle_jahresstand)
+} else {
+  bioabfaelle_final <- bioabfaelle_olddata}
+
+
+# Datensatz als csv speichern (für zukünftige Verwendung olddata)
+write_excel_csv(bioabfaelle_final, here::here("data/output/bioabfaelle.csv"), delim = ";")
+
+
+
+
+

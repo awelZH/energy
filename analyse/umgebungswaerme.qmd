@@ -1,0 +1,137 @@
+---
+title: "Auswertung Umgebungswärme"
+author: "Levi Fuchs"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Auswertung Umgebungswärme
+
+Für die Energiestatistik werden auch Angaben zur Nutzung der Umgebungswärme ausgewertet<br> Die Daten werden aus diversen Quellen eingelesen, umgeformt und ausgewertet.
+
+## Inputdaten
+
+```{r}
+#| label: load-packages und data input
+#| include: false
+
+rm(list = ls())
+
+library(tidyverse)
+library(readxl)
+#library(sf)
+library(httr)
+
+
+kennwerte <- read.csv(here::here("data", "input", "kennwerte.csv"), sep=";")
+
+
+# Schweizerische Statistik der erneuerbaren Energien temporär speichern
+
+temp_file <- tempfile(fileext = ".xlsx")
+GET("https://pubdb.bfe.admin.ch/de/publication/download/8787", write_disk(temp_file, overwrite = TRUE)) #s. https://pubdb.bfe.admin.ch/de/suche?keywords=404
+
+input_bfe_wp <- read_excel(temp_file, sheet = "Anhang B", skip = 2)
+
+bfe_wp <- input_bfe_wp %>%
+  pivot_longer(cols = names(input_bfe_wp[(which(names(input_bfe_wp) == "Einheit")+1):(which(names(input_bfe_wp) == "Herkunft")-1)]), #Jahreszahlen befinden sich zw. den Spalten "Einheit" und "Herkunft"
+               names_to = "jahr",       # Die neuen Spaltennamen (Jahreszahlen) werden hier gespeichert
+               values_to = "Wert") %>%  # Die Werte werden in die neue Spalte "Wert" verschoben
+  mutate(Jahr = as.numeric(sub("X", "", jahr))) %>%  # Entferne das 'X' und konvertiere in numerische Werte
+  select(Technologie, Zeileninhalt, Einheit, Jahr, Wert) %>%
+  filter(str_detect(str_to_lower(Technologie), "luft / wasser") |
+           str_detect(str_to_lower(Technologie), "luft / luft") |
+           str_detect(str_to_lower(Technologie), "sole / wasser") |
+           str_detect(str_to_lower(Technologie), "wasser / wasser")) %>%
+  mutate(Technologie = str_remove(Technologie, "^\\-\\s*")) %>% # Entfernt "- " am Anfang
+  mutate(Einheit = ifelse(grepl("anzahl", Zeileninhalt, ignore.case = TRUE), "Anzahl", Einheit)) %>%
+  mutate(Technologie = gsub("Luft / Wasser", "l_w_wp", Technologie)) %>%
+  mutate(Technologie = gsub("Luft / Luft", "l_l_wp", Technologie)) %>%
+  mutate(Technologie = gsub("Sole / Wasser", "s_w_wp", Technologie)) %>%
+  mutate(Technologie = gsub("Wasser / Wasser", "w_w_wp", Technologie)) %>%
+  select(-Zeileninhalt) %>%
+  unite("Technologie_Einheit", Technologie, Einheit, sep = "_") %>%
+  pivot_wider(names_from = Technologie_Einheit, values_from = Wert) %>%
+  mutate_all(as.numeric) %>%
+  rename_with(tolower) %>% #Spaltennamen klein schreiben
+  select(jahr, l_w_wp_anzahl, l_l_wp_anzahl, s_w_wp_anzahl, w_w_wp_anzahl, l_w_wp_gwh, l_l_wp_gwh, s_w_wp_gwh, w_w_wp_gwh) %>%
+  rename_with(~ paste0(., "_ch"), -jahr)
+```
+
+```{r}
+#| label: load-input-data
+#| include: false
+#ausgehend von Daten erdsonden (Gian-Marco)
+
+erdsonden_LvF <- read.csv(here::here("data", "output", "erdsonden.csv"), sep=";")
+
+```
+
+# Erdsonden
+
+```{r}
+#| label: get-wfs-gemeindegrenzen
+#| echo: false
+
+erd_waermeentnahme_mwh <- erdsonden_LvF %>%
+  group_by(year_verfuegung) %>%
+  summarize(erd_waermeentnahme_mwh = sum(cum_waermeentnahme, na.rm = TRUE)*kennwerte$betriebszeit_wp/1000)
+
+erd_waermeeintrag_mwh <- erdsonden_LvF %>%
+  group_by(year_verfuegung) %>%
+  summarize(erd_waermeeintrag_mwh = sum(cum_waermeeintrag, na.rm = TRUE)*kennwerte$betriebszeit_wp/1000)
+
+erd_anzahl <- erdsonden_LvF %>%
+  group_by(year_verfuegung) %>%
+  summarize(erd_anzahl = sum(cum_anzahl, na.rm = TRUE))
+
+#erdsonden_waermeeintrag_mwh <- erdsonden_LvF %>%
+#  group_by(Jahr) %>%
+#  summarize(Summe_Wärmeeintrag_MWh = sum(Wärmeeintrag_MWh, na.rm = TRUE))
+```
+
+# Luft-WP
+
+```{r}
+#| label: test-gemeindenamen
+#| echo: false
+
+umgebungswaerme <- bfe_wp %>%
+  merge(erd_waermeentnahme_mwh, by.x = "Jahr", by.y = "year_verfuegung") %>%
+  merge(erd_waermeeintrag_mwh, by.x = "Jahr", by.y = "year_verfuegung") %>%
+  merge(erd_anzahl, by.x = "Jahr", by.y = "year_verfuegung")
+
+
+#NOCHMALS ANSCHAUEN!!!
+umgebungswaerme$luft_zh_anzahl_CH <- umgebungswaerme$erd_anzahl*((umgebungswaerme$L_L_WP_Anzahl+umgebungswaerme$L_W_WP_Anzahl)/(umgebungswaerme$S_W_WP_Anzahl+umgebungswaerme$W_W_WP_Anzahl))
+umgebungswaerme$luft_zh_waermeentnahme_mwh_CH <- umgebungswaerme$erd_waermeentnahme_mwh*((umgebungswaerme$L_L_WP_GWh+umgebungswaerme$L_W_WP_GWh)/(umgebungswaerme$S_W_WP_GWh+umgebungswaerme$W_W_WP_GWh))
+umgebungswaerme$luft_zh_waermeeintrag_mwh_CH <- umgebungswaerme$erd_waermeeintrag_mwh*((umgebungswaerme$L_L_WP_GWh+umgebungswaerme$L_W_WP_GWh)/(umgebungswaerme$S_W_WP_GWh+umgebungswaerme$W_W_WP_GWh))
+
+umgebungswaerme$luft_zh_anzahl_GP <- umgebungswaerme$erd_anzahl*((umgebungswaerme$L_L_WP_Anzahl+umgebungswaerme$L_W_WP_Anzahl)/(umgebungswaerme$S_W_WP_Anzahl+umgebungswaerme$W_W_WP_Anzahl))
+umgebungswaerme$luft_zh_waermeentnahme_mwh_GP <- umgebungswaerme$erd_waermeentnahme_mwh*((umgebungswaerme$L_L_WP_GWh+umgebungswaerme$L_W_WP_GWh)/(umgebungswaerme$S_W_WP_GWh+umgebungswaerme$W_W_WP_GWh))
+umgebungswaerme$luft_zh_waermeeintrag_mwh_GP <- umgebungswaerme$erd_waermeeintrag_mwh*((umgebungswaerme$L_L_WP_GWh+umgebungswaerme$L_W_WP_GWh)/(umgebungswaerme$S_W_WP_GWh+umgebungswaerme$W_W_WP_GWh))
+```
+
+```{r}
+#| label: join-gemeindenamen
+#| echo: false
+
+```
+
+# Datensatz anlagen_grund_wp erstellen
+
+```{r}
+#| label: anlagendatensatz erstellen
+#| echo: false
+
+```
+
+# Datenverarbeitung
+
+```{r}
+#| label: wrangle-data
+#| echo: true
+
+```

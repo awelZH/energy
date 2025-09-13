@@ -7,8 +7,6 @@ rm(list = ls())
 
 # Scripts und libraries einlesen
 source(here::here("analyse/gemeinden.R"))
-library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
-library(sf)
 library(readr)
 library(readxl)
 library(tcltk)
@@ -17,7 +15,7 @@ library(tcltk)
 #### INPUT DATEN ####
 
 # bisherige Anlage-Daten einlesen
-gewaesser_wp_olddata <- read.csv(here::here("data/output/oberfl_gewaesser_anlagen_26_08_25.csv"), sep=";")
+gewaesser_wp_olddata <- read.csv(here::here("data/input/oberfl_gewaesser_anlagen_26_08_25.csv"), sep=";")
 
 gewaesser_wp_jahresstand_input <- read_excel("K:/BD-AWEL-050-EN/Elektrizitätswirtschaft/Administration/Praktikum/Levi_Fuchs/Projekte/Energiestatistik_neu/R_Project/Oberflaechen_WP/oberflaechen_wp_jahresstand_2024.xlsx")
 
@@ -32,8 +30,6 @@ current_year <- as.integer(format(Sys.Date(), "%Y"))
 
 # Parsing the URL
 url <- httr2::url_parse(wfs_all)
-
-#kennwerte <- read.csv("https://raw.githubusercontent.com/awelZH/energy/refs/heads/main/data/input/kennwerte.csv", encoding="UTF-8", sep=";", header = T)
 
 kennwerte <- read.csv(here::here("data/input/kennwerte.csv"), sep=";")
 
@@ -200,34 +196,33 @@ gewaesser_wp_jahresstand_final <- left_join(gewaesser_wp_jahresstand, join_exact
   # Entfernen der überflüssigen Spalten
   select(-nearest_bfsnr, -nearest_gemeinde) %>% # 3 NA
   left_join(
-    gewaesser_wp_olddata %>% select(anlage, bfsnr, gemeinde),  # Nur die benötigten Spalten aus datensatz2
+    gewaesser_wp_olddata %>% select(anlage, bfsnr, ort),  # Nur die benötigten Spalten aus datensatz2
     by = c("WRNr" = "anlage")  # Join-Bedingung
   ) %>%
   mutate(
     bfsnr = coalesce(na_if(bfsnr.x, 0), na_if(bfsnr.y, 0)),
-    gemeinde = coalesce(gemeinde.x, gemeinde.y)  # NA-Werte aus datensatz1 mit Werten aus datensatz2 füllen
+    ort = coalesce(gemeinde, ort)  # NA-Werte aus datensatz1 mit Werten aus datensatz2 füllen
   ) %>%
-  select(-gemeinde.x, -gemeinde.y, -bfsnr.x, -bfsnr.y) %>%
+  select(-bfsnr.x, -bfsnr.y) %>%
   distinct() %>%
-  select(bfsnr, gemeinde, WRNr, GebKEkWfix, GebWEkWfix, jahr, Betrieb) %>%
+  select(bfsnr, ort, WRNr, GebKEkWfix, GebWEkWfix, jahr, Betrieb) %>%
   rename(anlage=WRNr, Wärme=GebKEkWfix, Kälte=GebWEkWfix, betrieb=Betrieb) %>%
   mutate(across(c(Wärme, Kälte), as.numeric)) %>%
   mutate(
     bfsnr = if_else(anlage == "b0224", 261, bfsnr),
-    gemeinde = if_else(anlage == "b0224", "Zürich", gemeinde),
+    ort = if_else(anlage == "b0224", "Zürich", ort),
   ) %>%
-  select(bfsnr, gemeinde, anlage, Wärme, Kälte, jahr, betrieb) %>%
+  select(bfsnr, ort, anlage, Wärme, Kälte, jahr, betrieb) %>%
   pivot_longer(
     cols = c(Wärme, Kälte),
-    names_to = "subthema",
+    names_to = "thema",
     values_to = "wert"
   ) %>%
   mutate(
-    rubrik = "Wärme",
-    thema = "Oberflächengewässer",
+    rubrik = "Oberflächengewässer",
     einheit = "kW"
   ) %>%
-  select(jahr, rubrik, thema, subthema, wert, einheit, anlage, betrieb, bfsnr, gemeinde) %>%
+  select(jahr, anlage, ort, bfsnr, rubrik, thema, wert, einheit, betrieb) %>%
   arrange(jahr)
 
 
@@ -259,7 +254,7 @@ write_excel_csv2(gewaesser_wp_final_anlage, here::here("data/output/oberfl_gewae
 
 gewaesser_wp_final <- gewaesser_wp_final_anlage %>%
   filter(betrieb == "Ja") %>%
-  group_by(jahr, rubrik, thema, subthema, einheit, bfsnr, gemeinde)  %>%
+  group_by(jahr, rubrik, thema, einheit, bfsnr, ort)  %>%
   summarise(wert_kw = sum(wert, na.rm = TRUE), anzahl = n(), .groups = 'drop') %>%
   mutate(wert_mwh = wert_kw*kennwerte$betriebszeit_wp/1000) %>%
   pivot_longer(
@@ -273,10 +268,9 @@ gewaesser_wp_final <- gewaesser_wp_final_anlage %>%
       variable == "wert_mwh"  ~ "MWh",
       variable == "anzahl"    ~ "Anzahl",
       TRUE ~ einheit
-    ),
-    ort = gemeinde
+    )
   ) %>%
-  select(jahr, bfsnr, ort, rubrik, thema, subthema, wert, einheit)
+  select(jahr, bfsnr, ort, rubrik, thema, wert, einheit)
 
 
 

@@ -93,9 +93,8 @@ grundwasser_wp_final <- tibble(input_grund_wp) %>%
       variable == "cum_anzahl"    ~ "Anzahl"
     ),
     ort = gemeinde,
-    rubrik = "Wärme",
-    thema = "Grundwasser WP",
-    subthema = case_when(
+    rubrik = "Grundwasser WP",
+    thema = case_when(
       variable == "cum_waermeentnahme_kw"   ~ "Wärme",
       variable == "cum_waermeeintrag_kw"   ~ "Kälte",
       variable == "cum_waermeentnahme_mwh"   ~ "Wärme",
@@ -103,7 +102,7 @@ grundwasser_wp_final <- tibble(input_grund_wp) %>%
       variable == "cum_anzahl"    ~ "Anzahl"
     )
   ) %>%
-  select(jahr, bfsnr, ort, rubrik, thema, subthema, wert, einheit)
+  select(jahr, bfsnr, ort, rubrik, thema, wert, einheit)
 
 
 write_excel_csv(grundwasser_wp_final, here::here("data/output/grundwasser.csv"), delim = ";")
