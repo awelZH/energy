@@ -13,7 +13,7 @@ library(janitor)
 
 #### INPUT UND AUFBEREITUNG DATEN ####
 
-strom_olddata <- read.csv(here::here("data/output/stromverbrauch_28_08_25.csv"), sep=";")
+strom_olddata <- read.csv(here::here("data/input/stromverbrauch_28_08_25.csv"), sep=";")
 
 
 ## Gebäude und Anlagen (Elcom Daten - Excel)
@@ -84,7 +84,7 @@ if (interactive() && requireNamespace("rstudioapi", quietly = TRUE)) {
     
     if (!is.null(eingabe) && eingabe != "") {
       teile <- strsplit(eingabe, ",")[[1]]
-      jahr <- as.integer(trimws(teile[1]))
+      jahr_temp <- as.integer(trimws(teile[1]))
       wert_gwh <- as.numeric(trimws(teile[2]))
       
       # Wert in MWh (aus GWh) berechnen
@@ -92,7 +92,7 @@ if (interactive() && requireNamespace("rstudioapi", quietly = TRUE)) {
       
       # Verhältnis aus bevoelkerung_final holen
       verhältnis <- bevoelkerung_final %>%
-        filter(jahr == jahr) %>%
+        filter(jahr == jahr_temp) %>%
         pull(verhaeltnis_ch_zh)
       
       # Sicherstellen, dass genau ein Wert da ist und kein NA
@@ -112,7 +112,7 @@ if (interactive() && requireNamespace("rstudioapi", quietly = TRUE)) {
           ort = "Kanton ZH"
         )
         
-        # Alte Bahn-Daten für das Zieljahr entfernen (auch wenn NA drinsteht)
+        # Alte Daten für das Zieljahr entfernen (auch wenn NA drinsteht)
         strom_alte_bahn <- strom_olddata %>%
           filter(!(jahr == ziel_jahr & thema == "Bahn"))
         

@@ -7,9 +7,7 @@
 rm(list = ls())
 
 # Scripts und libraries einlesen
-library(tidyverse) # a suite of packages for data wrangling, transformation, plotting, ...
-#library(sf)
-library(readr)
+library(tidyverse)
 library(readxl)
 
 
@@ -18,7 +16,7 @@ library(readxl)
 current_year <- as.integer(format(Sys.Date(), "%Y"))
 
 #alte daten einfügen
-kva_olddata <- read.csv(here::here("data/output/kva_27_08_25.csv"), sep=";")
+kva_olddata <- read.csv(here::here("data/input/kva_27_08_25.csv"), sep=";")
 
 
 # Ordnerpfad anpassen
@@ -206,24 +204,17 @@ kva_jaresstand_final <- kva_jaresstand %>%
       variable == "kva_abfall_t_anlage"    ~ "t",
       variable == "kva_hu_wert_anlage"    ~ "Hu"
     ),
-    subthema = case_when(
-      variable == "kva_waerme_mwh_anlage"   ~ "Wärme",
+    thema = case_when(
+      variable == "kva_waerme_mwh_anlage"   ~ "Wärmeabsatz",
       variable == "kva_stromprod_mwh_anlage"  ~ "Stromproduktion",
       variable == "kva_stromabsatz_mwh_anlage"    ~ "Stromabsatz",
       variable == "kva_dampf_mwh_anlage"    ~ "Dampfproduktion",
       variable == "kva_abfall_t_anlage"    ~ "Abfallmenge",
       variable == "kva_hu_wert_anlage"    ~ "Heizwert Hu"
     ),
-    rubrik = case_when(
-      variable == "kva_waerme_mwh_anlage"   ~ "Wärme",
-      variable == "kva_stromprod_mwh_anlage"  ~ "Strom",
-      variable == "kva_stromabsatz_mwh_anlage"    ~ "Strom",
-      variable == "kva_dampf_mwh_anlage"    ~ "Wärme",
-      variable == "kva_abfall_t_anlage"    ~ "Sonstiges",
-      variable == "kva_hu_wert_anlage"    ~ "Wärme"
-    ),
+    rubrik = "KVA"
   ) %>%
-  select(jahr, bfsnr, ort, anlage, rubrik, thema, subthema, wert, einheit)
+  select(jahr, bfsnr, ort, anlage, rubrik, thema, wert, einheit)
 
 
 
@@ -231,7 +222,7 @@ kva_jaresstand_final <- kva_jaresstand %>%
 
 kva_final <- bind_rows(kva_olddata, kva_jaresstand_final) %>%
   arrange(jahr) %>%  # Sicherstellen, dass ältere Werte zuerst kommen
-  distinct(anlage, jahr, .keep_all = TRUE)  # Behalte nur die neuesten Werte
+  distinct(anlage, jahr, rubrik, thema, einheit, .keep_all = TRUE)  # Behalte nur die neuesten Werte
 
 # Ergebnis anzeigen
 print(kva_final)

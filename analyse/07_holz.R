@@ -4,6 +4,9 @@
 # Die Daten werden aus der Holzenergiestatistik des Bundes bezogen und können mit R eingelesen, umgeformt und ausgewertet werden. Die Unübersichtlichkeit des Excels und die vielen Sheets erschweren eine automatisierte Verarbeitung. Im Jahr 2024 wurde die Statistik als xlsm herausgegeben. Code müsste angepasst werden, wenn wieder xlsx.
 
 
+### WOHL EIN NEUER DOWNLOAD-LINK FÜRS 2024!!!
+
+
 rm(list = ls())
 
 
@@ -11,9 +14,9 @@ rm(list = ls())
 library(openxlsx)
 library(httr) # generic webservice package
 library(tidyverse)
-library(readr)
+#library(readr)
 
-holz_olddata <- read.csv(here::here("data/output/holz.csv"), sep=";")
+holz_olddata <- read.csv(here::here("data/input/holz_28_08_25.csv"), sep=";")
 
 kennwerte <- read.csv(here::here("data/input/kennwerte.csv"), encoding="UTF-8", sep=";", header = T)
 
@@ -31,7 +34,7 @@ default_link <- readLines(link_file, warn = FALSE)
 # Popup mit vorbelegtem Link
 user_link <- rstudioapi::showPrompt(
   title = "Download-Link festlegen",
-  message = paste("Hier muss der aktuelle Download-Link der Schweizerischen Statistik der erneuerbaren Energien eingetragen werden. Aktueller Link (vermutlich aus dem Jahr", letztes_jahr,"):", default_link, 
+  message = paste("Hier muss der aktuelle Download-Link der Schweizerischen Holzenergiestatistik eingetragen werden. Aktueller Link (vermutlich aus dem Jahr", letztes_jahr,"):", default_link, 
                   "\nFalls es einen aktuelleren Link gibt, hier eingeben:"),
   default = default_link
 )
@@ -106,7 +109,7 @@ if (length(summe_index) > 0 && summe_index < ncol(holz_prov1)) {
 
 holz_jahresstand_kw <- holz_prov2 %>%
   filter(.[[1]] == "Zürich") %>%
-  mutate(jahr = jahr_datensatz, rubrik = "Wärme", thema = "Holz", wert = as.numeric(holz_kw_zh), einheit = "kW", ort = "Kanton ZH") %>%
+  mutate(jahr = jahr_datensatz, rubrik = "Holz", thema = "Wärme", wert = as.numeric(holz_kw_zh), einheit = "kW", ort = "Kanton ZH") %>%
   select(-c(Summe, holz_kw_zh, Kantone))
 
 holz_jahresstand_mwh <- holz_jahresstand_kw %>%
@@ -117,6 +120,7 @@ holz_jahresstand <- rbind(holz_jahresstand_kw, holz_jahresstand_mwh)
 holz_final <- holz_olddata %>% 
   rows_update(holz_jahresstand, by = c("jahr", "einheit"), unmatched = "ignore") %>%  # Erst vorhandene Werte aktualisieren
   bind_rows(anti_join(holz_jahresstand, holz_olddata, by = c("jahr", "einheit"))) %>% # Dann fehlende Jahre hinzufügen
+  select(jahr, ort, rubrik, thema, wert, einheit) %>%
   arrange(einheit, jahr)
 
 

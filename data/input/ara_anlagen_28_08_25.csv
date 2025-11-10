@@ -1,0 +1,318 @@
+﻿jahr;ort;bfsnr;rubrik;thema;wert;einheit
+2005;Adliswil (Grütpark);131;ARA;Wärme;0;MWh
+2005;Bassersdorf (Eich);52;ARA;Wärme;700;MWh
+2005;Bülach;53;ARA;Wärme;650;MWh
+2005;Dietikon (Limmatfeld);243;ARA;Wärme;0;MWh
+2005;Dübendorf (Neugut);191;ARA;Wärme;0;MWh
+2005;Effretikon (Mannenberg);296;ARA;Wärme;1200;MWh
+2005;Egg (Oetwil Esslingen);192;ARA;Wärme;660;MWh
+2005;Fehraltorf (Russikon);172;ARA;Wärme;0;MWh
+2005;Gossau (Grüningen);115;ARA;Wärme;0;MWh
+2005;Horgen (Oberrieden);295;ARA;Wärme;0;MWh
+2005;Knonau;7;ARA;Wärme;0;MWh
+2005;Küsnacht (Erlenbach);154;ARA;Wärme;0;MWh
+2005;Meilen;156;ARA;Wärme;170;MWh
+2005;Männedorf (Bluemax);155;ARA;Wärme;350;MWh
+2005;Mönchaltorf;196;ARA;Wärme;0;MWh
+2005;Regensdorf (Wüeri);96;ARA;Wärme;0;MWh
+2005;Thalwil;141;ARA;Wärme;0;MWh
+2005;Uster;198;ARA;Wärme;900;MWh
+2005;Winterthur (Hard);230;ARA;Wärme;0;MWh
+2005;Wädenswil (Rietliau);293;ARA;Wärme;600;MWh
+2005;Zumikon;160;ARA;Wärme;1500;MWh
+2005;Zürich (Werdhölzli);261;ARA;Wärme;2000;MWh
+2009;Adliswil (Grütpark);131;ARA;Wärme;5700;MWh
+2009;Bassersdorf (Eich);52;ARA;Wärme;700;MWh
+2009;Bülach;53;ARA;Wärme;700;MWh
+2009;Dietikon (Limmatfeld);243;ARA;Wärme;3200;MWh
+2009;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2009;Effretikon (Mannenberg);296;ARA;Wärme;1200;MWh
+2009;Egg (Oetwil Esslingen);192;ARA;Wärme;0;MWh
+2009;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2009;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2009;Horgen (Oberrieden);295;ARA;Wärme;0;MWh
+2009;Knonau;7;ARA;Wärme;300;MWh
+2009;Küsnacht (Erlenbach);154;ARA;Wärme;0;MWh
+2009;Meilen;156;ARA;Wärme;400;MWh
+2009;Männedorf (Bluemax);155;ARA;Wärme;400;MWh
+2009;Mönchaltorf;196;ARA;Wärme;200;MWh
+2009;Regensdorf (Wüeri);96;ARA;Wärme;1300;MWh
+2009;Thalwil;141;ARA;Wärme;3400;MWh
+2009;Uster;198;ARA;Wärme;1200;MWh
+2009;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2009;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2009;Zumikon;160;ARA;Wärme;1500;MWh
+2009;Zürich (Werdhölzli);261;ARA;Wärme;32552;MWh
+2012;Adliswil (Grütpark);131;ARA;Wärme;5700;MWh
+2012;Bassersdorf (Eich);52;ARA;Wärme;700;MWh
+2012;Bülach;53;ARA;Wärme;700;MWh
+2012;Dietikon (Limmatfeld);243;ARA;Wärme;3200;MWh
+2012;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2012;Effretikon (Mannenberg);296;ARA;Wärme;1200;MWh
+2012;Egg (Oetwil Esslingen);192;ARA;Wärme;0;MWh
+2012;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2012;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2012;Horgen (Oberrieden);295;ARA;Wärme;0;MWh
+2012;Knonau;7;ARA;Wärme;300;MWh
+2012;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2012;Meilen;156;ARA;Wärme;400;MWh
+2012;Männedorf (Bluemax);155;ARA;Wärme;400;MWh
+2012;Mönchaltorf;196;ARA;Wärme;200;MWh
+2012;Regensdorf (Wüeri);96;ARA;Wärme;1300;MWh
+2012;Thalwil;141;ARA;Wärme;3400;MWh
+2012;Uster;198;ARA;Wärme;1200;MWh
+2012;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2012;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2012;Zürich (Werdhölzli);261;ARA;Wärme;39849;MWh
+2013;Adliswil (Grütpark);131;ARA;Wärme;1200;MWh
+2013;Bassersdorf (Eich);52;ARA;Wärme;659;MWh
+2013;Bülach;53;ARA;Wärme;700;MWh
+2013;Dietikon (Limmatfeld);243;ARA;Wärme;2761;MWh
+2013;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2013;Effretikon (Mannenberg);296;ARA;Wärme;1454;MWh
+2013;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2013;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2013;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2013;Horgen (Oberrieden);295;ARA;Wärme;2190;MWh
+2013;Knonau;7;ARA;Wärme;270;MWh
+2013;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2013;Meilen;156;ARA;Wärme;450;MWh
+2013;Männedorf (Bluemax);155;ARA;Wärme;502;MWh
+2013;Mönchaltorf;196;ARA;Wärme;725;MWh
+2013;Regensdorf (Wüeri);96;ARA;Wärme;1146;MWh
+2013;Thalwil;141;ARA;Wärme;1321;MWh
+2013;Uster;198;ARA;Wärme;1208;MWh
+2013;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2013;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2013;Zürich (Werdhölzli);261;ARA;Wärme;44271;MWh
+2014;Adliswil (Grütpark);131;ARA;Wärme;1059;MWh
+2014;Bassersdorf (Eich);52;ARA;Wärme;605;MWh
+2014;Bülach;53;ARA;Wärme;700;MWh
+2014;Dietikon (Limmatfeld);243;ARA;Wärme;3068;MWh
+2014;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2014;Effretikon (Mannenberg);296;ARA;Wärme;1151;MWh
+2014;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2014;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2014;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2014;Horgen (Oberrieden);295;ARA;Wärme;1715;MWh
+2014;Knonau;7;ARA;Wärme;270;MWh
+2014;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2014;Meilen;156;ARA;Wärme;386;MWh
+2014;Männedorf (Bluemax);155;ARA;Wärme;905;MWh
+2014;Mönchaltorf;196;ARA;Wärme;615;MWh
+2014;Regensdorf (Wüeri);96;ARA;Wärme;852;MWh
+2014;Thalwil;141;ARA;Wärme;2010;MWh
+2014;Uster;198;ARA;Wärme;901;MWh
+2014;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2014;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2014;Zürich (Werdhölzli);261;ARA;Wärme;39447;MWh
+2015;Adliswil (Grütpark);131;ARA;Wärme;1113;MWh
+2015;Bassersdorf (Eich);52;ARA;Wärme;604;MWh
+2015;Bülach;53;ARA;Wärme;700;MWh
+2015;Dietikon (Limmatfeld);243;ARA;Wärme;3933;MWh
+2015;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2015;Effretikon (Mannenberg);296;ARA;Wärme;1176;MWh
+2015;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2015;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2015;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2015;Horgen (Oberrieden);295;ARA;Wärme;1767;MWh
+2015;Knonau;7;ARA;Wärme;270;MWh
+2015;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2015;Meilen;156;ARA;Wärme;396;MWh
+2015;Männedorf (Bluemax);155;ARA;Wärme;1370;MWh
+2015;Mönchaltorf;196;ARA;Wärme;595;MWh
+2015;Regensdorf (Wüeri);96;ARA;Wärme;1016;MWh
+2015;Thalwil;141;ARA;Wärme;3369;MWh
+2015;Uster;198;ARA;Wärme;1550;MWh
+2015;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2015;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2015;Zürich (Werdhölzli);261;ARA;Wärme;42596;MWh
+2016;Adliswil (Grütpark);131;ARA;Wärme;1162;MWh
+2016;Bassersdorf (Eich);52;ARA;Wärme;1233;MWh
+2016;Bülach;53;ARA;Wärme;700;MWh
+2016;Dietikon (Limmatfeld);243;ARA;Wärme;5856;MWh
+2016;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2016;Effretikon (Mannenberg);296;ARA;Wärme;1252;MWh
+2016;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2016;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2016;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2016;Horgen (Oberrieden);295;ARA;Wärme;1844;MWh
+2016;Knonau;7;ARA;Wärme;270;MWh
+2016;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2016;Meilen;156;ARA;Wärme;631;MWh
+2016;Männedorf (Bluemax);155;ARA;Wärme;877;MWh
+2016;Mönchaltorf;196;ARA;Wärme;862;MWh
+2016;Regensdorf (Wüeri);96;ARA;Wärme;1086;MWh
+2016;Thalwil;141;ARA;Wärme;1758;MWh
+2016;Uster;198;ARA;Wärme;2017;MWh
+2016;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2016;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2016;Zürich (Werdhölzli);261;ARA;Wärme;43119;MWh
+2017;Adliswil (Grütpark);131;ARA;Wärme;1086;MWh
+2017;Bassersdorf (Eich);52;ARA;Wärme;1619;MWh
+2017;Bülach;53;ARA;Wärme;700;MWh
+2017;Dietikon (Limmatfeld);243;ARA;Wärme;5287;MWh
+2017;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2017;Effretikon (Mannenberg);296;ARA;Wärme;1156;MWh
+2017;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2017;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2017;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2017;Horgen (Oberrieden);295;ARA;Wärme;2090;MWh
+2017;Knonau;7;ARA;Wärme;270;MWh
+2017;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2017;Meilen;156;ARA;Wärme;854;MWh
+2017;Männedorf (Bluemax);155;ARA;Wärme;858;MWh
+2017;Mönchaltorf;196;ARA;Wärme;418;MWh
+2017;Regensdorf (Wüeri);96;ARA;Wärme;903;MWh
+2017;Thalwil;141;ARA;Wärme;1946;MWh
+2017;Uster;198;ARA;Wärme;2372;MWh
+2017;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2017;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2017;Zürich (Werdhölzli);261;ARA;Wärme;45176;MWh
+2018;Adliswil (Grütpark);131;ARA;Wärme;1089;MWh
+2018;Bassersdorf (Eich);52;ARA;Wärme;1266;MWh
+2018;Bülach;53;ARA;Wärme;700;MWh
+2018;Dietikon (Limmatfeld);243;ARA;Wärme;5104;MWh
+2018;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2018;Effretikon (Mannenberg);296;ARA;Wärme;1134;MWh
+2018;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2018;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2018;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2018;Horgen (Oberrieden);295;ARA;Wärme;1995;MWh
+2018;Knonau;7;ARA;Wärme;270;MWh
+2018;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2018;Meilen;156;ARA;Wärme;904;MWh
+2018;Männedorf (Bluemax);155;ARA;Wärme;837;MWh
+2018;Mönchaltorf;196;ARA;Wärme;676;MWh
+2018;Regensdorf (Wüeri);96;ARA;Wärme;1247;MWh
+2018;Thalwil;141;ARA;Wärme;1749;MWh
+2018;Uster;198;ARA;Wärme;2326;MWh
+2018;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2018;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2018;Zürich (Werdhölzli);261;ARA;Wärme;42586;MWh
+2019;Adliswil (Grütpark);131;ARA;Wärme;1138;MWh
+2019;Bassersdorf (Eich);52;ARA;Wärme;1405;MWh
+2019;Bülach;53;ARA;Wärme;700;MWh
+2019;Dietikon (Limmatfeld);243;ARA;Wärme;6042;MWh
+2019;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2019;Effretikon (Mannenberg);296;ARA;Wärme;1324;MWh
+2019;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2019;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2019;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2019;Horgen (Oberrieden);295;ARA;Wärme;2039;MWh
+2019;Knonau;7;ARA;Wärme;270;MWh
+2019;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2019;Meilen;156;ARA;Wärme;953;MWh
+2019;Männedorf (Bluemax);155;ARA;Wärme;937;MWh
+2019;Mönchaltorf;196;ARA;Wärme;683;MWh
+2019;Regensdorf (Wüeri);96;ARA;Wärme;1470;MWh
+2019;Thalwil;141;ARA;Wärme;2071;MWh
+2019;Uster;198;ARA;Wärme;2745;MWh
+2019;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2019;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2019;Zürich (Werdhölzli);261;ARA;Wärme;46754;MWh
+2020;Adliswil (Grütpark);131;ARA;Wärme;1123;MWh
+2020;Bassersdorf (Eich);52;ARA;Wärme;1186;MWh
+2020;Bülach;53;ARA;Wärme;700;MWh
+2020;Dietikon (Limmatfeld);243;ARA;Wärme;6172;MWh
+2020;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2020;Effretikon (Mannenberg);296;ARA;Wärme;1399;MWh
+2020;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2020;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2020;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2020;Horgen (Oberrieden);295;ARA;Wärme;2917;MWh
+2020;Knonau;7;ARA;Wärme;270;MWh
+2020;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2020;Meilen;156;ARA;Wärme;928;MWh
+2020;Männedorf (Bluemax);155;ARA;Wärme;952;MWh
+2020;Mönchaltorf;196;ARA;Wärme;689;MWh
+2020;Regensdorf (Wüeri);96;ARA;Wärme;1601;MWh
+2020;Thalwil;141;ARA;Wärme;2002;MWh
+2020;Uster;198;ARA;Wärme;4152;MWh
+2020;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2020;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2020;Zürich (Werdhölzli);261;ARA;Wärme;49565;MWh
+2021;Adliswil (Grütpark);131;ARA;Wärme;1234;MWh
+2021;Bassersdorf (Eich);52;ARA;Wärme;2309;MWh
+2021;Bülach;53;ARA;Wärme;700;MWh
+2021;Dietikon (Limmatfeld);243;ARA;Wärme;6172;MWh
+2021;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2021;Effretikon (Mannenberg);296;ARA;Wärme;1614;MWh
+2021;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2021;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2021;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2021;Horgen (Oberrieden);295;ARA;Wärme;2037;MWh
+2021;Knonau;7;ARA;Wärme;270;MWh
+2021;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2021;Meilen;156;ARA;Wärme;1155;MWh
+2021;Männedorf (Bluemax);155;ARA;Wärme;1123;MWh
+2021;Mönchaltorf;196;ARA;Wärme;745;MWh
+2021;Regensdorf (Wüeri);96;ARA;Wärme;1772;MWh
+2021;Thalwil;141;ARA;Wärme;2281;MWh
+2021;Uster;198;ARA;Wärme;3744;MWh
+2021;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2021;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2021;Zürich (Werdhölzli);261;ARA;Wärme;58175;MWh
+2022;Adliswil (Grütpark);131;ARA;Wärme;937;MWh
+2022;Bassersdorf (Eich);52;ARA;Wärme;1305;MWh
+2022;Bülach;53;ARA;Wärme;700;MWh
+2022;Dietikon (Limmatfeld);243;ARA;Wärme;6172;MWh
+2022;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2022;Effretikon (Mannenberg);296;ARA;Wärme;1348;MWh
+2022;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2022;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2022;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2022;Horgen (Oberrieden);295;ARA;Wärme;1829;MWh
+2022;Knonau;7;ARA;Wärme;270;MWh
+2022;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2022;Meilen;156;ARA;Wärme;1057;MWh
+2022;Männedorf (Bluemax);155;ARA;Wärme;1014;MWh
+2022;Mönchaltorf;196;ARA;Wärme;554;MWh
+2022;Regensdorf (Wüeri);96;ARA;Wärme;1470;MWh
+2022;Thalwil;141;ARA;Wärme;1901;MWh
+2022;Uster;198;ARA;Wärme;3387;MWh
+2022;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2022;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2022;Zürich (Werdhölzli);261;ARA;Wärme;50057;MWh
+2023;Adliswil (Grütpark);131;ARA;Wärme;958;MWh
+2023;Bassersdorf (Eich);52;ARA;Wärme;560;MWh
+2023;Bülach;53;ARA;Wärme;700;MWh
+2023;Dietikon (Limmatfeld);243;ARA;Wärme;6172;MWh
+2023;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2023;Effretikon (Mannenberg);296;ARA;Wärme;1214;MWh
+2023;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2023;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2023;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2023;Horgen (Oberrieden);295;ARA;Wärme;1931;MWh
+2023;Knonau;7;ARA;Wärme;270;MWh
+2023;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2023;Meilen;156;ARA;Wärme;1060;MWh
+2023;Männedorf (Bluemax);155;ARA;Wärme;1157;MWh
+2023;Mönchaltorf;196;ARA;Wärme;622;MWh
+2023;Regensdorf (Wüeri);96;ARA;Wärme;1472;MWh
+2023;Thalwil;141;ARA;Wärme;508;MWh
+2023;Uster;198;ARA;Wärme;3218;MWh
+2023;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2023;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
+2023;Zürich (Werdhölzli);261;ARA;Wärme;50057;MWh
+2024;Adliswil (Grütpark);131;ARA;Wärme;1011;MWh
+2024;Bassersdorf (Eich);52;ARA;Wärme;907;MWh
+2024;Bülach;53;ARA;Wärme;700;MWh
+2024;Dietikon (Limmatfeld);243;ARA;Wärme;5915;MWh
+2024;Dübendorf (Neugut);191;ARA;Wärme;7800;MWh
+2024;Effretikon (Mannenberg);296;ARA;Wärme;1230;MWh
+2024;Egg (Oetwil Esslingen);192;ARA;Wärme;715;MWh
+2024;Fehraltorf (Russikon);172;ARA;Wärme;100;MWh
+2024;Gossau (Grüningen);115;ARA;Wärme;300;MWh
+2024;Horgen (Oberrieden);295;ARA;Wärme;1911;MWh
+2024;Knonau;7;ARA;Wärme;270;MWh
+2024;Küsnacht (Erlenbach);154;ARA;Wärme;1500;MWh
+2024;Meilen;156;ARA;Wärme;1056;MWh
+2024;Männedorf (Bluemax);155;ARA;Wärme;1006;MWh
+2024;Mönchaltorf;196;ARA;Wärme;673;MWh
+2024;Regensdorf (Wüeri);96;ARA;Wärme;1404;MWh
+2024;Thalwil;141;ARA;Wärme;1116;MWh
+2024;Uster (Prioritätsgebiet 2);198;ARA;Wärme;2402;MWh
+2024;Uster (Prioritätsgebiet 1);198;ARA;Wärme;836;MWh
+2024;Winterthur (Hard);230;ARA;Wärme;400;MWh
+2024;Wädenswil (Rietliau);293;ARA;Wärme;700;MWh
