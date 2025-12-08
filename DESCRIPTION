@@ -3,7 +3,7 @@ Title: Create indicators relevant for the statistics of energy of the Kanton of 
 Version: 0.0.0.9000
 Authors@R: c(
     person("Bruno", "Federica", email = "federica.bruno@bd.zh.ch", role = "cre"),
-    person("Grobe", "Corinna", email = "gian-marco.alt@bd.zh.ch", role = "aut"))
+    person("Alt", "Gian-Marco", email = "gian-marco.alt@bd.zh.ch", role = "aut"))
 Description: This package contains functions to perform the whole ETL (extract, transform, load) pipeline 
     for each indicator of the "Energiestatistik" of the Kanton of Zürich.
 BugReports: https://github.com/awelZH/energy/issues
