@@ -1,0 +1,34 @@
+Package: decarbmonitoring
+Title: Create indicators relevant for the decarb monitoring of the Kanton of Zürich
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Bosch", "Philipp", email = "philipp.bosch@statistik.ji.zh.ch", role = "cre"),
+    person("Grobe", "Corinna", email = "corinna.grobe@statistik.ji.zh.ch", role = "aut"),
+    person("Lo Russo", "Thomas", email = "thomas.lorusso@statistik.ji.zh.ch", role = "aut"))
+Description: This package contains functions to perform the whole ETL (extract, transform, load) pipeline 
+    for each indicator of the "Dekarbonisierungsmonitoring" of the Kanton of Zürich.
+BugReports: https://github.com/statistikZH/decarb_monitoring/issues
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    data.table,
+    dplyr,
+    fs,
+    httr2,
+    lubridate,
+    magrittr,
+    purrr,
+    pxweb,
+    readxl,
+    rio (>= 1.1.1),
+    rvest,
+    stringr,
+    tidyr,
+    utils,
+    whisker,
+    xml2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
