@@ -19,7 +19,7 @@
 create_dataset <- function(dataset_id) {
 
   # get all the metadata information for a specific dataset
-  data <- readxl::read_excel("2773 Monitoring.xlsx", sheet = "ParameterlisteZH") %>%
+  data <- readxl::read_excel("5204_energie.xlsx", sheet = "Primärdaten") %>%
     dplyr::filter(DATASET_ID == dataset_id, STATUS == 1) %>%
     dplyr::select(
       DATASET_ID,
@@ -35,18 +35,18 @@ create_dataset <- function(dataset_id) {
       GEBIET_COL,
       GEBIET_ID,
       GEBIET_NAME,
-      DIMENSION1_COL,
-      DIMENSION1_ID,
-      DIMENSION1_NAME,
-      DIMENSION2_COL,
-      DIMENSION2_ID,
-      DIMENSION2_NAME,
-      DIMENSION_UNIT,
-      DIMENSION_LABEL,
+      #DIMENSION1_COL,
+      #DIMENSION1_ID,
+      #DIMENSION1_NAME,
+      #DIMENSION2_COL,
+      #DIMENSION2_ID,
+      #DIMENSION2_NAME,
+      #DIMENSION_UNIT,
+      #DIMENSION_LABEL,
       DATA_SOURCE,
-      LAST_UPDATED,
-      MODIFY_NEXT,
-      DEPENDENCY
+      #LAST_UPDATED,
+      #MODIFY_NEXT,
+      #DEPENDENCY
     ) %>%
     dplyr::rename_all(tolower) %>%
     as.list()
