@@ -5,7 +5,9 @@
 # Schritt 1 : hier werden die Daten eingelesen
 
 ds <- create_dataset('EP')
+ds2 <- create_dataset('EG')
 ds <- download_data(ds)
+ds2 <- download_data(ds2)
 
 # Dieses Objekt dient als Grundlage zur Weiterverarbeitung
 
