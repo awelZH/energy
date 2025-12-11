@@ -4,13 +4,20 @@
 # Import data -------------------------------------------------------------
 # Schritt 1 : hier werden die Daten eingelesen
 
-ds <- create_dataset('EP')
-EP <- download_data(ds)
 ds <- create_dataset('Q1')
 Q1 <- download_data(ds)
+
+Q1_data <- Q1$data
+
+ds <- create_dataset('EP')
+EP <- download_data(ds)
+
+EP_data <- EP$data
+
+
 # Dieses Objekt dient als Grundlage zur Weiterverarbeitung
 
-EP_data <- ds$data
+
 
 ## zusätzliche Daten für Errechnung Indikator
 
