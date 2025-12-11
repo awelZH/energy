@@ -33,6 +33,7 @@ create_dataset <- function(dataset_id) {
       YEAR_COL,
       YEAR_START,
       GEBIET_COL,
+      GEBIET_ID,
       GEBIET_NAME,
       DIMENSION1_COL,
       DIMENSION1_ID,
