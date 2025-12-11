@@ -7,13 +7,18 @@
 ds <- create_dataset('Q1')
 Q1 <- download_data(ds)
 
-Q1_data <- Q1$data
+Q1 <- Q1$data
 
 ds <- create_dataset('EP')
 EP <- download_data(ds)
 
-EP_data <- EP$data
+EP <- EP$data
 
+
+ds <- create_dataset('EG')
+EG <- download_data(ds)
+
+EG <- EG$data
 
 # Dieses Objekt dient als Grundlage zur Weiterverarbeitung
 
@@ -32,24 +37,171 @@ EP_data <- EP$data
 # - Anteile berechnen
 # - Umbenennung von Kategorien
 
-# Beispiel : Fahrzeuge nach Treibstoff - dieser Block dient nur der Veranschaulichung ---------
 
-EP_computed <- EP_data %>%
-  # Renaming of columns in preparation to bring data into a uniform structure
-  dplyr::rename('Gebiet' = Kanton, 'Variable' = Treibstoff, 'Wert' = `Neue Inverkehrsetzungen von Strassenfahrzeugen`) %>%
-  # Auxiliary variable for calculating the number of fossil vs. fossil-free passenger cars. Fossil being 'Benzin' + 'Diesel' + 'Gas (mono- und bivalent)'
-  dplyr::mutate(Treibstoff_Typ = dplyr::if_else(Variable %in% c('Benzin', 'Diesel', 'Gas (mono- und bivalent)'), 'fossil', 'fossil-free')) %>%
-  # Calculating number of cars by year, spacial unit, and fuel type
-  dplyr::group_by(Jahr, Gebiet, Treibstoff_Typ) %>%
-  dplyr::summarise(Anzahl = sum(Wert)) %>%
-  dplyr::ungroup() %>%
-  # Adding the total number of cars by year and spacial unit and calculate the share by fuel type
-  dplyr::group_by(Jahr, Gebiet) %>%
-  dplyr::mutate(Total = sum(Anzahl),
-                Anteil = (Anzahl / Total)) %>%
-  # Convert table to a long format
-  tidyr::pivot_longer(cols = c(Anzahl, Total, Anteil), names_to = 'Einheit', values_to = 'Wert') %>%
+#### Datenaufbereitung ZH Bevölkerung ####
+
+## Q1 auf Kanton Zürich kürzen
+zh_bev <- Q1 %>%
+  dplyr::filter(Kanton == "Zürich") %>%  
+  dplyr::group_by(Jahr) %>% 
+  dplyr::summarize(bevölkerung = sum(`Ständige und nichtständige Wohnbevölkerung`, na.rm = TRUE)) %>% 
   dplyr::ungroup()
+
+## Q1 nach Jahr gruppieren für Total CH
+ch_bev <- Q1 %>%
+  dplyr::group_by(Jahr) %>% 
+  dplyr::summarize(bevölkerung = sum(`Ständige und nichtständige Wohnbevölkerung`, na.rm = TRUE)) %>% 
+  dplyr::ungroup()
+
+## Jahr von character → numeric
+zh_bev <- zh_bev %>%
+  dplyr::mutate(jahr = as.numeric(Jahr))
+
+ch_bev <- ch_bev %>%
+  dplyr::mutate(jahr = as.numeric(Jahr))
+
+
+
+
+#### Datenaufbereitung Gasdaten####
+
+kantonale_gasdaten <- EG %>%
+  dplyr::group_by(jahr) %>%
+  dplyr::summarise(kantonswert_MWh = sum(wert, na.rm = TRUE)) %>%
+  dplyr::ungroup()
+
+
+#### Datenaufbereitung Energiestatistik####
+
+prepare_energy_dataframe <- function(data) {
+  # Erdgas
+  erdgas <- data %>%
+    filter(Jahr >= 1990,
+           Rubrik == "Endverbrauch - Total",
+           Energietraeger == "Gas") %>%
+    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+  
+  # Kohle
+  kohle <- data %>%
+    filter(Jahr >= 1990,
+           Rubrik == "Endverbrauch - Total",
+           Energietraeger == "Kohle") %>%
+    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+  
+  # Verkehr Erdölprodukte
+  oel_verkehr <- data %>%
+    filter(Jahr >= 1990,
+           Rubrik == "Endverbrauch - Verkehr",
+           Energietraeger == "Erdölprodukte") %>%
+    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+  
+  # Heizöl
+  heizoel <- data %>%
+    filter(Jahr >= 1990,
+           Rubrik %in% c("Endverbrauch - Total", "Endverbrauch - Verkehr"),
+           Energietraeger == "Erdölprodukte") %>%
+    dplyr::select(Jahr, Rubrik, TJ) %>%
+    pivot_wider(names_from = Rubrik, values_from = TJ) %>%
+    dplyr::mutate(
+      Rubrik = "Endverbrauch - Total",
+      Energietraeger = "Heizöl",
+      TJ = `Endverbrauch - Total` - `Endverbrauch - Verkehr`
+    ) %>%
+    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+  
+  bind_rows(erdgas, kohle, oel_verkehr, heizoel)
+}
+
+## Dataframe erzeugen basierend auf EP
+dataframe_energy <- prepare_energy_dataframe(EP)
+
+
+## Sicherheitschecks
+
+check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_bev) {
+  zh_pop <- zh_bev_df %>% filter(jahr == jahr_input) %>% pull(bevölkerung)
+  ch_pop <- ch_bev_df %>% filter(jahr == jahr_input) %>% pull(bevölkerung)
+  cat("Jahr:", jahr_input, "| ZH Pop:", length(zh_pop), zh_pop, "| CH Pop:", length(ch_pop), ch_pop, "\n")
+  tibble(
+    Jahr = jahr_input,
+    ZH_Bev = zh_pop,
+    CH_Bev = ch_pop
+  )
+}
+
+check_bevölkerung(2023)
+
+
+test_energie <- function(jahr_input, energy_df = dataframe_energy) {
+  e_j <- energy_df %>% filter(Jahr == jahr_input)
+  print(e_j)
+  tibble(
+    Jahr = jahr_input,
+    n_zeilen = nrow(e_j)
+  )
+}
+
+test_energie(2023)
+
+
+# ------------------------------------------------------------
+#  Funktion zur Berechnung CO2-Emissionen ####
+# ------------------------------------------------------------
+
+berechne_emissionen <- function(jahr,
+                                energy_df = dataframe_energy,
+                                gas_df    = kantonale_gasdaten,
+                                ch_bev_df = ch_bev,
+                                zh_bev_df = zh_bev,
+                                ef_heizoel     = 265,
+                                ef_treibstoffe = 250,
+                                ef_gas         = 198) {
+  
+  zh_pop <- zh_bev_df %>% filter(jahr == !!jahr) %>% pull(bevölkerung)
+  ch_pop <- ch_bev_df %>% filter(jahr == !!jahr) %>% pull(bevölkerung)
+  pop_factor <- zh_pop / ch_pop
+  
+  e_j <- energy_df %>% filter(Jahr == !!jahr)
+  
+  tj_gas     <- e_j %>% filter(Energietraeger == "Gas")           %>% pull(TJ)
+  tj_kohle   <- e_j %>% filter(Energietraeger == "Kohle")         %>% pull(TJ)
+  tj_heizoel <- e_j %>% filter(Energietraeger == "Heizöl")        %>% pull(TJ)
+  tj_verkehr <- e_j %>% filter(Energietraeger == "Erdölprodukte") %>% pull(TJ)
+  
+  gas_MWh_zh <- gas_df %>% filter(jahr == !!jahr) %>% pull(kantonswert_MWh)
+  
+  erdoel_MWh_zh  <- (tj_gas + tj_kohle + tj_heizoel) / 3.6 * pop_factor * 1000
+  heizoel_MWh_zh <- erdoel_MWh_zh - gas_MWh_zh
+  verkehr_MWh_zh <- tj_verkehr / 3.6 * pop_factor * 1000
+  
+  heizoel_CO2 <- heizoel_MWh_zh / 1000 * ef_heizoel
+  treibst_CO2 <- verkehr_MWh_zh / 1000 * ef_treibstoffe
+  gas_CO2     <- gas_MWh_zh / 1000 * ef_gas
+  
+  total_CO2   <- heizoel_CO2 + treibst_CO2 + gas_CO2
+  total_CO2_pKopf <- total_CO2 / zh_pop
+  
+  tibble(
+    Jahr              = jahr,
+    total_CO2_t       = round(total_CO2, 0),
+    total_CO2_pKopf_t = round(total_CO2_pKopf, 2)
+  )
+}
+
+jahre_ab_2012 <- zh_bev$jahr[zh_bev$jahr >= 2012 & zh_bev$jahr %in% ch_bev$jahr]
+emissions_tabelle <- purrr::map_dfr(jahre_ab_2012, berechne_emissionen)
+
+print(emissions_tabelle)
+
+emissions_tabelle <- emissions_tabelle %>%
+  arrange(Jahr) %>%
+  rename(CO2_Emissionen_pro_Kopf = total_CO2_pKopf_t,
+         CO2_Emissionen_total = total_CO2_t) %>% 
+  mutate(
+    `KEF Indikator W11` = rollmean(CO2_Emissionen_pro_Kopf, k = 4, fill = NA, align = "right")
+  )
+
+print(emissions_tabelle)
 
 # Die Voraussetzung für den letzten Schritt (3) ist ein Datensatz im long Format nach folgendem Beispiel:
 
