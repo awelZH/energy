@@ -5,9 +5,9 @@
 # Schritt 1 : hier werden die Daten eingelesen
 
 ds <- create_dataset('EP')
-ds2 <- create_dataset('BEV')
-ds <- download_data(ds)
-ds2 <- download_data(ds2)
+EP <- download_data(ds)
+ds <- create_dataset('Q1')
+Q1 <- download_data(ds)
 # Dieses Objekt dient als Grundlage zur Weiterverarbeitung
 
 EP_data <- ds$data
