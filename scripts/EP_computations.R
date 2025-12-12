@@ -73,35 +73,35 @@ kantonale_gasdaten <- EG %>%
 
 #### Datenaufbereitung Energiestatistik####
 
-prepare_energy_dataframe <- function(data) {
+prepare_energy_dataframe <- function(EP) {
   # Erdgas
-  erdgas <- data %>%
-    filter(Jahr >= 1990,
+  erdgas <- EP %>%
+    dplyr::filter(Jahr >= 1990,
            Rubrik == "Endverbrauch - Total",
            Energietraeger == "Gas") %>%
     dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
   
   # Kohle
-  kohle <- data %>%
-    filter(Jahr >= 1990,
+  kohle <- EP %>%
+    dplyr::filter(Jahr >= 1990,
            Rubrik == "Endverbrauch - Total",
            Energietraeger == "Kohle") %>%
     dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
   
   # Verkehr Erdölprodukte
-  oel_verkehr <- data %>%
-    filter(Jahr >= 1990,
+  oel_verkehr <- EP %>%
+    dplyr::filter(Jahr >= 1990,
            Rubrik == "Endverbrauch - Verkehr",
            Energietraeger == "Erdölprodukte") %>%
     dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
   
   # Heizöl
-  heizoel <- data %>%
-    filter(Jahr >= 1990,
+  heizoel <- EP %>%
+    dplyr::filter(Jahr >= 1990,
            Rubrik %in% c("Endverbrauch - Total", "Endverbrauch - Verkehr"),
            Energietraeger == "Erdölprodukte") %>%
     dplyr::select(Jahr, Rubrik, TJ) %>%
-    pivot_wider(names_from = Rubrik, values_from = TJ) %>%
+    tidyr::pivot_wider(names_from = Rubrik, values_from = TJ) %>%
     dplyr::mutate(
       Rubrik = "Endverbrauch - Total",
       Energietraeger = "Heizöl",
@@ -109,7 +109,7 @@ prepare_energy_dataframe <- function(data) {
     ) %>%
     dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
   
-  bind_rows(erdgas, kohle, oel_verkehr, heizoel)
+  dplyr::bind_rows(erdgas, kohle, oel_verkehr, heizoel)
 }
 
 ## Dataframe erzeugen basierend auf EP
@@ -119,10 +119,14 @@ dataframe_energy <- prepare_energy_dataframe(EP)
 ## Sicherheitschecks
 
 check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_bev) {
-  zh_pop <- zh_bev_df %>% filter(jahr == jahr_input) %>% pull(bevölkerung)
-  ch_pop <- ch_bev_df %>% filter(jahr == jahr_input) %>% pull(bevölkerung)
+  zh_pop <- zh_bev_df %>% 
+    dplyr::filter(jahr == jahr_input) %>% 
+    dplyr::pull(bevölkerung)
+  ch_pop <- ch_bev_df %>% 
+    dplyr::filter(jahr == jahr_input) %>% 
+    dplyr::pull(bevölkerung)
   cat("Jahr:", jahr_input, "| ZH Pop:", length(zh_pop), zh_pop, "| CH Pop:", length(ch_pop), ch_pop, "\n")
-  tibble(
+  dplyr::tibble(
     Jahr = jahr_input,
     ZH_Bev = zh_pop,
     CH_Bev = ch_pop
