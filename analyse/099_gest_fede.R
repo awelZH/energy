@@ -1,5 +1,6 @@
 library(dplyr)
-library(tidyr)library(readxl)
+library(tidyr)
+library(readxl)
 library(readr)
 library(purrr)
 library(zoo)
@@ -27,6 +28,7 @@ gas_zh <- gasdaten |>
 #### Datenaufbereitung ZH Bevölkerung####
 
 ## ch_bev auf kanton kürzen
+
 
 zh_bev <- ch_bev_og %>%
   filter(kt == "Zürich") %>%  # nur kantonale Daten

@@ -2,7 +2,7 @@
 
 rm(list = c("create_dataset", "indicator_init"))
 
-
+#################### !! sind die Gasdaten aktualisiert???? ----------------
 # Import data -------------------------------------------------------------
 # Schritt 1 : hier werden die Daten eingelesen
 
@@ -18,11 +18,16 @@ ds <- create_dataset('EG')
 EG <- download_data(ds)
 EG <- EG$data
 
+EG <- gasdaten
+
+
 # Berechnungen -----------------------------------------------------
 
 # Schritt 2 : Falls die zu publizierenden Werte noch berechnet werden müssen, können hier Aggregierungs- und Transformationsschritte vorgenommen werden.
 
 ## Datenaufbereitung ZH Bevölkerung ####
+
+
 
 Q1_clean <- Q1 %>%
   dplyr::rename(bevölkerung = `Ständige und nichtständige Wohnbevölkerung`) %>%
@@ -44,49 +49,6 @@ kantonale_gasdaten <- EG %>%
 prepare_energy_dataframe <- function(EP) {
   
   # Hilfsfunktion: immer gleiche Filter + Auswahl
-  get_energy <- function(rubrik, carrier) {
-    EP %>%
-      dplyr::filter(Jahr >= 1990,
-             Rubrik == rubrik,
-             Energietraeger == carrier) %>%
-      dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
-  }
-  
-  erdgas      <- get_energy("Endverbrauch - Total", "Gas")
-  kohle       <- get_energy("Endverbrauch - Total", "Kohle")
-  oel_verkehr <- get_energy("Endverbrauch - Verkehr",c("Erdölprodukte", "Gas"))
-  
-  # Heizöl
-  heizoel <- EP %>%
-    dplyr::filter(Jahr >= 1990,
-           Rubrik %in% c("Endverbrauch - Total", "Endverbrauch - Verkehr"),
-           Energietraeger == "Erdölprodukte") %>%
-    dplyr::select(Jahr, Rubrik, TJ) %>%
-    tidyr::pivot_wider(names_from = Rubrik, values_from = TJ) %>%
-    dplyr::mutate(
-      Rubrik = "Endverbrauch - Total",
-      Energietraeger = "Heizöl",
-      TJ = `Endverbrauch - Total` - `Endverbrauch - Verkehr`
-    ) %>%
-    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
-  
-  dplyr::bind_rows(erdgas, kohle, oel_verkehr, heizoel)
-}
-
-## Dataframe erzeugen basierend auf EP
-dataframe_energy <- prepare_energy_dataframe(EP)
-
-
-
-
-
-
-
-
-######################neu -----------------------------------
-
-
-prepare_energy_dataframe <- function(EP) {
   get_energy <- function(rubrik, carrier, carrier_name = carrier[1]) {
   EP %>%
     dplyr::filter(
@@ -103,23 +65,11 @@ prepare_energy_dataframe <- function(EP) {
     dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
 }
 
-erdgas <- get_energy(
-  "Endverbrauch - Total",
-  "Gas"
-)
-
-kohle <- get_energy(
-  "Endverbrauch - Total",
-  "Kohle"
-)
-
-oel_verkehr <- get_energy(
-  "Endverbrauch - Verkehr",
-  c("Erdölprodukte", "Gas"),
-  carrier_name = "Erdölprodukte + Gas"
-)
-
-
+erdgas <- get_energy("Endverbrauch - Total", "Gas")
+kohle <- get_energy("Endverbrauch - Total", "Kohle")
+oel_verkehr <- get_energy("Endverbrauch - Verkehr", "Erdölprodukte")
+# 4. Gas aus Verkehr
+gas_verkehr <- get_energy("Endverbrauch - Verkehr", "Gas")
 # Heizöl
 heizoel <- EP %>%
   dplyr::filter(Jahr >= 1990,
@@ -134,36 +84,12 @@ heizoel <- EP %>%
   ) %>%
   dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
 
-dplyr::bind_rows(erdgas, kohle, oel_verkehr, heizoel)
+dplyr::bind_rows(erdgas, kohle, oel_verkehr, heizoel, gas_verkehr)
+
 }
 
 ## Dataframe erzeugen basierend auf EP
 dataframe_energy <- prepare_energy_dataframe(EP)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Sicherheitschecks
 
@@ -216,7 +142,7 @@ berechne_emissionen <- function(jahr,
   tj_gas     <- e_j %>% dplyr::filter(Energietraeger == "Gas")           %>% dplyr::pull(TJ)
   tj_kohle   <- e_j %>% dplyr::filter(Energietraeger == "Kohle")         %>% dplyr::pull(TJ)
   tj_heizoel <- e_j %>% dplyr::filter(Energietraeger == "Heizöl")        %>% dplyr::pull(TJ)
-  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte + Gas") %>% dplyr::pull(TJ)
+  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte") %>% dplyr::pull(TJ)
   
   gas_MWh_zh <- gas_df %>% dplyr::filter(jahr == !!jahr) %>% dplyr::pull(kantonswert_MWh)
   
@@ -234,137 +160,11 @@ berechne_emissionen <- function(jahr,
   dplyr::tibble(
     Jahr              = jahr,
     CO2_Emissionen_total       = round(total_CO2, 0),
-    CO2_Emissionen_pro_Kopf = round(total_CO2_pKopf, 2)
+    CO2_Emissionen_pro_Kopf = round(total_CO2_pKopf, 5)
   )
 }
 
 berechne_emissionen(2024)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-berechne_MWh_energietraeger <- function(jahr,
-                                        energy_df = dataframe_energy,
-                                        gas_df    = kantonale_gasdaten,
-                                        ch_bev_df = ch_bev,
-                                        zh_bev_df = zh_bev) {
-  
-  # Bevölkerungsfaktor CH -> ZH
-  zh_pop <- zh_bev_df %>%
-    dplyr::filter(Jahr == !!jahr) %>%
-    dplyr::pull(bevölkerung)
-  
-  ch_pop <- ch_bev_df %>%
-    dplyr::filter(Jahr == !!jahr) %>%
-    dplyr::pull(bevölkerung)
-  
-  pop_factor <- zh_pop / ch_pop
-  
-  # Energiedaten Jahr
-  e_j <- energy_df %>% dplyr::filter(Jahr == !!jahr)
-  
-  tj_gas     <- e_j %>% dplyr::filter(Energietraeger == "Gas")                 %>% dplyr::pull(TJ)
-  tj_kohle   <- e_j %>% dplyr::filter(Energietraeger == "Kohle")               %>% dplyr::pull(TJ)
-  tj_heizoel <- e_j %>% dplyr::filter(Energietraeger == "Heizöl")              %>% dplyr::pull(TJ)
-  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte + Gas") %>% dplyr::pull(TJ)
-  
-  # Umrechnungsfunktion TJ -> MWh (ZH)
-  tj_to_MWh_zh <- function(tj_ch, pop_factor) {
-    tj_ch / 3.6 * 1000 * pop_factor
-  }
-  
-  # CH-hochgerechnete MWh je Energieträger
-  gas_MWh_zh_CH     <- tj_to_MWh_zh(tj_gas, pop_factor)
-  kohle_MWh_zh_CH   <- tj_to_MWh_zh(tj_kohle, pop_factor)
-  heizoel_MWh_zh_CH <- tj_to_MWh_zh(tj_heizoel, pop_factor)
-  verkehr_MWh_zh    <- tj_to_MWh_zh(tj_verkehr, pop_factor)
-  
-  dplyr::tibble(
-    Jahr = jahr,
-    Energietraeger = c("Gas", "Kohle", "Heizöl", "Treibstoffe Verkehr"),
-    MWh_zh = round(
-      c(gas_MWh_zh_CH,
-        kohle_MWh_zh_CH,
-        heizoel_MWh_zh_CH,
-        verkehr_MWh_zh),
-      0
-    )
-  )
-}
-
-
-
-berechne_MWh_energietraeger(2024)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

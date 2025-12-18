@@ -66,6 +66,7 @@ gas_MWh_zh <- kantonale_gasdaten %>%
 # CO2-Berechnung
 # -----------------------------
 heizoel_CO2 <- heizoel_MWh_zh_CH / 1000 * 265
+
 treibst_CO2 <- verkehr_MWh_zh    / 1000 * 250
 gas_CO2     <- gas_MWh_zh        / 1000 * 198
 
