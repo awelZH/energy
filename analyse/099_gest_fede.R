@@ -1,6 +1,5 @@
 library(dplyr)
-library(tidyr)
-library(readxl)
+library(tidyr)library(readxl)
 library(readr)
 library(purrr)
 library(zoo)
@@ -11,7 +10,7 @@ library(openxlsx)
 ## ACHTUNG -- Hier immer neue/aktualisierte Datensätze ablgegen
 
 ## Bevölkerungsdaten
-ch_bev_og <- read_csv("data/input/bev_gem.csv")
+ch_bev_og <- read_csv("data/input/px-x-0102010000_102_20251218-083856.csv")
 
 
 ## Energiedaten
@@ -20,6 +19,10 @@ data <- read_csv('https://www.uvek-gis.admin.ch/BFE/ogd/115/ogd115_gest_bilanz.c
 ## Gasdaten (separat)
 gasdaten <- read_csv("data/input/gas_inp_gem.csv")
 
+
+gas_zh <- gasdaten |> 
+  group_by(jahr) |> 
+  summarize(verbrauch = sum(wert,na.rm = T))
 
 #### Datenaufbereitung ZH Bevölkerung####
 
@@ -120,7 +123,7 @@ check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_be
     CH_Bev = ch_pop
   )
 }
-check_bevölkerung(2023)
+check_bevölkerung(2024)
 
 ## Sicherheitstest für Input-Werte
 

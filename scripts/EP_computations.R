@@ -2,6 +2,7 @@
 
 rm(list = c("create_dataset", "indicator_init"))
 
+
 # Import data -------------------------------------------------------------
 # Schritt 1 : hier werden die Daten eingelesen
 
@@ -53,7 +54,7 @@ prepare_energy_dataframe <- function(EP) {
   
   erdgas      <- get_energy("Endverbrauch - Total", "Gas")
   kohle       <- get_energy("Endverbrauch - Total", "Kohle")
-  oel_verkehr <- get_energy("Endverbrauch - Verkehr", "Erdölprodukte")
+  oel_verkehr <- get_energy("Endverbrauch - Verkehr",c("Erdölprodukte", "Gas"))
   
   # Heizöl
   heizoel <- EP %>%
@@ -76,6 +77,94 @@ prepare_energy_dataframe <- function(EP) {
 dataframe_energy <- prepare_energy_dataframe(EP)
 
 
+
+
+
+
+
+
+######################neu -----------------------------------
+
+
+prepare_energy_dataframe <- function(EP) {
+  get_energy <- function(rubrik, carrier, carrier_name = carrier[1]) {
+  EP %>%
+    dplyr::filter(
+      Jahr >= 1990,
+      Rubrik == rubrik,
+      Energietraeger %in% carrier
+    ) %>%
+    dplyr::group_by(Jahr, Rubrik) %>%
+    dplyr::summarise(
+      TJ = sum(TJ, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    dplyr::mutate(Energietraeger = carrier_name) %>%
+    dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+}
+
+erdgas <- get_energy(
+  "Endverbrauch - Total",
+  "Gas"
+)
+
+kohle <- get_energy(
+  "Endverbrauch - Total",
+  "Kohle"
+)
+
+oel_verkehr <- get_energy(
+  "Endverbrauch - Verkehr",
+  c("Erdölprodukte", "Gas"),
+  carrier_name = "Erdölprodukte + Gas"
+)
+
+
+# Heizöl
+heizoel <- EP %>%
+  dplyr::filter(Jahr >= 1990,
+                Rubrik %in% c("Endverbrauch - Total", "Endverbrauch - Verkehr"),
+                Energietraeger == "Erdölprodukte") %>%
+  dplyr::select(Jahr, Rubrik, TJ) %>%
+  tidyr::pivot_wider(names_from = Rubrik, values_from = TJ) %>%
+  dplyr::mutate(
+    Rubrik = "Endverbrauch - Total",
+    Energietraeger = "Heizöl",
+    TJ = `Endverbrauch - Total` - `Endverbrauch - Verkehr`
+  ) %>%
+  dplyr::select(Jahr, Rubrik, Energietraeger, TJ)
+
+dplyr::bind_rows(erdgas, kohle, oel_verkehr, heizoel)
+}
+
+## Dataframe erzeugen basierend auf EP
+dataframe_energy <- prepare_energy_dataframe(EP)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Sicherheitschecks
 
 check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_bev) {
@@ -92,7 +181,7 @@ check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_be
     CH_Bev = ch_pop
   )
 }
-check_bevölkerung(2023)
+check_bevölkerung(2024)
 
 test_energie <- function(jahr_input, energy_df = dataframe_energy) {
   e_j <- energy_df %>% 
@@ -103,7 +192,7 @@ test_energie <- function(jahr_input, energy_df = dataframe_energy) {
     n_zeilen = nrow(e_j)
   )
 }
-test_energie(2023)
+test_energie(2024)
 
 # ------------------------------------------------------------
 #  Funktion zur Berechnung CO2-Emissionen ####
@@ -127,13 +216,13 @@ berechne_emissionen <- function(jahr,
   tj_gas     <- e_j %>% dplyr::filter(Energietraeger == "Gas")           %>% dplyr::pull(TJ)
   tj_kohle   <- e_j %>% dplyr::filter(Energietraeger == "Kohle")         %>% dplyr::pull(TJ)
   tj_heizoel <- e_j %>% dplyr::filter(Energietraeger == "Heizöl")        %>% dplyr::pull(TJ)
-  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte") %>% dplyr::pull(TJ)
+  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte + Gas") %>% dplyr::pull(TJ)
   
   gas_MWh_zh <- gas_df %>% dplyr::filter(jahr == !!jahr) %>% dplyr::pull(kantonswert_MWh)
   
   erdoel_MWh_zh  <- (tj_gas + tj_kohle + tj_heizoel) / 3.6 * pop_factor * 1000
   heizoel_MWh_zh <- erdoel_MWh_zh - gas_MWh_zh
-  verkehr_MWh_zh <- tj_verkehr / 3.6 * pop_factor * 1000
+  verkehr_MWh_zh <- tj_verkehr/ 3.6 * pop_factor * 1000
   
   heizoel_CO2 <- heizoel_MWh_zh / 1000 * ef_heizoel
   treibst_CO2 <- verkehr_MWh_zh / 1000 * ef_treibstoffe
@@ -148,6 +237,136 @@ berechne_emissionen <- function(jahr,
     CO2_Emissionen_pro_Kopf = round(total_CO2_pKopf, 2)
   )
 }
+
+berechne_emissionen(2024)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+berechne_MWh_energietraeger <- function(jahr,
+                                        energy_df = dataframe_energy,
+                                        gas_df    = kantonale_gasdaten,
+                                        ch_bev_df = ch_bev,
+                                        zh_bev_df = zh_bev) {
+  
+  # Bevölkerungsfaktor CH -> ZH
+  zh_pop <- zh_bev_df %>%
+    dplyr::filter(Jahr == !!jahr) %>%
+    dplyr::pull(bevölkerung)
+  
+  ch_pop <- ch_bev_df %>%
+    dplyr::filter(Jahr == !!jahr) %>%
+    dplyr::pull(bevölkerung)
+  
+  pop_factor <- zh_pop / ch_pop
+  
+  # Energiedaten Jahr
+  e_j <- energy_df %>% dplyr::filter(Jahr == !!jahr)
+  
+  tj_gas     <- e_j %>% dplyr::filter(Energietraeger == "Gas")                 %>% dplyr::pull(TJ)
+  tj_kohle   <- e_j %>% dplyr::filter(Energietraeger == "Kohle")               %>% dplyr::pull(TJ)
+  tj_heizoel <- e_j %>% dplyr::filter(Energietraeger == "Heizöl")              %>% dplyr::pull(TJ)
+  tj_verkehr <- e_j %>% dplyr::filter(Energietraeger == "Erdölprodukte + Gas") %>% dplyr::pull(TJ)
+  
+  # Umrechnungsfunktion TJ -> MWh (ZH)
+  tj_to_MWh_zh <- function(tj_ch, pop_factor) {
+    tj_ch / 3.6 * 1000 * pop_factor
+  }
+  
+  # CH-hochgerechnete MWh je Energieträger
+  gas_MWh_zh_CH     <- tj_to_MWh_zh(tj_gas, pop_factor)
+  kohle_MWh_zh_CH   <- tj_to_MWh_zh(tj_kohle, pop_factor)
+  heizoel_MWh_zh_CH <- tj_to_MWh_zh(tj_heizoel, pop_factor)
+  verkehr_MWh_zh    <- tj_to_MWh_zh(tj_verkehr, pop_factor)
+  
+  dplyr::tibble(
+    Jahr = jahr,
+    Energietraeger = c("Gas", "Kohle", "Heizöl", "Treibstoffe Verkehr"),
+    MWh_zh = round(
+      c(gas_MWh_zh_CH,
+        kohle_MWh_zh_CH,
+        heizoel_MWh_zh_CH,
+        verkehr_MWh_zh),
+      0
+    )
+  )
+}
+
+
+
+berechne_MWh_energietraeger(2024)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Schritt 3 : Hier werden die Daten in die finale Form gebracht
 
