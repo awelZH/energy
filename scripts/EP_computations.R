@@ -1,6 +1,5 @@
 # EP - Erdölprodukte ----------------------------------------------------
 
-rm(list = c("create_dataset", "indicator_init"))
 
 #################### !! sind die Gasdaten aktualisiert???? ----------------
 # Import data -------------------------------------------------------------
@@ -101,7 +100,7 @@ check_bevölkerung <- function(jahr_input, ch_bev_df = ch_bev, zh_bev_df = zh_be
     CH_Bev = ch_pop
   )
 }
-check_bevölkerung(2024)
+check_bevölkerung(2023)
 
 test_energie <- function(jahr_input, energy_df = dataframe_energy) {
   e_j <- energy_df %>% 
@@ -112,7 +111,7 @@ test_energie <- function(jahr_input, energy_df = dataframe_energy) {
     n_zeilen = nrow(e_j)
   )
 }
-test_energie(2024)
+test_energie(2023)
 
 # ------------------------------------------------------------
 #  Funktion zur Berechnung CO2-Emissionen ####
@@ -133,8 +132,12 @@ berechne_emissionen <- function(jahr,
   
   e_j <- energy_df %>% dplyr::filter(Jahr == !!jahr)
   
-  tj_gas     <- e_j %>% dplyr::filter(Energietraeger == "Gas")           %>% dplyr::pull(TJ)
-  #tj_gas <- e_j %>%dplyr::filter(Energietraeger == "Gas") %>%dplyr::summarise(TJ = sum(TJ, na.rm = TRUE)) %>%dplyr::pull(TJ)
+  tj_gas <- e_j |> dplyr::filter(
+      Energietraeger == "Gas",
+      Rubrik == "Endverbrauch - Total") |> 
+    dplyr::pull(TJ)
+  
+  stopifnot(length(tj_gas) == 1)  #tj_gas <- e_j %>%dplyr::filter(Energietraeger == "Gas") %>%dplyr::summarise(TJ = sum(TJ, na.rm = TRUE)) %>%dplyr::pull(TJ)
   # wenn man die gaselemente summiert, komme ich wieder auf 5436000, anstelle von 5430000...wieso?
   
   tj_kohle   <- e_j %>% dplyr::filter(Energietraeger == "Kohle")         %>% dplyr::pull(TJ)
