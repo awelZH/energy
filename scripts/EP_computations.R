@@ -1,6 +1,6 @@
 # EP - Erdölprodukte ----------------------------------------------------
 
-
+##### test GMA ###########
 #################### !! sind die Gasdaten aktualisiert???? ----------------
 # Import data -------------------------------------------------------------
 # Schritt 1 : hier werden die Daten eingelesen
